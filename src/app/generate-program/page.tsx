@@ -132,7 +132,11 @@ const GenerateProgramPage = () => {
           ? `${user.firstName} ${user.lastName || ""}`.trim()
           : "There";
 
-        await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+        await vapi.start(
+          undefined,
+          undefined,
+          undefined,
+          process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
           variableValues: {
             full_name: fullName,
             user_id: user?.id,
