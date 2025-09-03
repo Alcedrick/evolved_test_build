@@ -1,11 +1,12 @@
 "use client"
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
-import { DumbbellIcon, HomeIcon, UserIcon, Dumbbell } from "lucide-react";
+import { DumbbellIcon, HomeIcon, UserIcon, Dumbbell, BookAlert, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
 const Navbar = () => {
-    const {isSignedIn} = useUser()
+    const { isSignedIn, user } = useUser()
+    const role = user?.publicMetadata?.role as string | undefined;
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-md border-b border-border py-3">
@@ -16,7 +17,7 @@ const Navbar = () => {
                       <Dumbbell className="w-4 h-4 text-default" />
                     </div>
                     <span className="text-xl font-bold font-mono">
-                      Evolved <span className="text-destructive">Fitness</span>
+                      <span className="text-destructive">Evolved </span>Fitness
                     </span>
                 </Link>
 
@@ -24,36 +25,34 @@ const Navbar = () => {
                 <nav className="flex items-center gap-5">
                   {isSignedIn ? (
                     <>
-                      <Link
-                        href="/"
-                        className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors"
-                      >
-                        <HomeIcon size={16} />
+                      <Link href="/" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                        <HomeIcon size={18} />
                         <span>Home</span>
                       </Link>
                    
-                      <Link
-                        href="/generate-program"
-                        className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors"
-                      >
-                        <DumbbellIcon size={16} />
+                      <Link href="/generate-program" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                        <DumbbellIcon size={18} />
                         <span>Generate</span>
                       </Link>
                    
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors"
-                      >
-                        <UserIcon size={16} />
+                      <Link href="/profile" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                        <UserIcon size={18} />
                         <span>Profile</span>
                       </Link>
-                      <Button
-                        asChild
-                        variant="outline"
-                        className="ml-2 border-destructive/50 text-destructive hover:text-white hover:bg-destructive/10"
-                      >
-                        <Link href="/generate-program">Get Started</Link>
-                      </Button>
+
+                      <Link href="/about" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                        <BookAlert size={18} />
+                        <span>About</span>
+                      </Link>
+
+                      {/* Show only if admin */}
+                      {role === "admin" && (
+                        <Link href="/admin" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                          <ShieldAlert size={18} />
+                          <span>Admin</span>
+                        </Link>
+                      )}
+
                       <UserButton />
                     </>
                   ) : (

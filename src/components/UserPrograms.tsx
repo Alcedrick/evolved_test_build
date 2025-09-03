@@ -17,12 +17,12 @@ const UserPrograms = () => {
     <div className="w-full pb-24 pt-16 relative">
       <div className="container mx-auto max-w-6xl px-4">
         {/* HEADER- PROGRAM GALLERY */}
-        <div className="bg-card/90 backdrop-blur-sm border border-border rounded-lg overflow-hidden mb-16">
+        <div className="bg-light-black backdrop-blur-sm border border-border rounded-lg overflow-hidden mb-16">
           {/* HEADER BAR */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-background/70">
             <div className="flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-destructive"></div>
-              <span className="text-sm text-destructive font-medium">Program Gallery</span>
+              <div className="w-2.5 h-2.5 rounded-full bg-medium-red"></div>
+              <span className="text-sm text-medium-red font-medium">Program Gallery</span>
             </div>
             <div className="text-sm text-muted-foreground">Featured Plans</div>
           </div>
@@ -31,7 +31,7 @@ const UserPrograms = () => {
           <div className="p-8 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               <span className="text-foreground">AI-Generated </span>
-              <span className="text-destructive">Programs</span>
+              <span className="text-medium-red">Programs</span>
             </h2>
 
             <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10">
@@ -41,21 +41,21 @@ const UserPrograms = () => {
             {/* STATS */}
             <div className="flex items-center justify-center gap-16 mt-10 font-mono">
               <div className="flex flex-col items-center">
-                <p className="text-3xl text-destructive">500+</p>
+                <p className="text-3xl text-medium-red">500+</p>
                 <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
                   PROGRAMS
                 </p>
               </div>
               <div className="w-px h-12 bg-border"></div>
               <div className="flex flex-col items-center">
-                <p className="text-3xl text-destructive">3min</p>
+                <p className="text-3xl text-medium-red">3min</p>
                 <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
                   CREATION TIME
                 </p>
               </div>
               <div className="w-px h-12 bg-border"></div>
               <div className="flex flex-col items-center">
-                <p className="text-3xl text-destructive">100%</p>
+                <p className="text-3xl text-medium-red">100%</p>
                 <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
                   PERSONALIZED
                 </p>
@@ -69,13 +69,13 @@ const UserPrograms = () => {
           {USER_PROGRAMS.map((program) => (
             <Card
               key={program.id}
-              className="bg-card/90 backdrop-blur-sm border border-border hover:border-destructive/50 transition-colors overflow-hidden"
+              className="bg-light-black backdrop-blur-sm border border-border hover:border-medium-red/50 transition-colors overflow-hidden"
             >
               {/* Card header with user info */}
               <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-background/70">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-destructive"></div>
-                  <span className="text-sm text-destructive">USER.{program.id}</span>
+                  <div className="w-2 h-2 rounded-full bg-medium-red"></div>
+                  <span className="text-sm text-medium-red">USER.{program.id}</span>
                 </div>
                 <div className="text-sm text-muted-foreground">
                   {program.fitness_level.toUpperCase()}
@@ -94,7 +94,7 @@ const UserPrograms = () => {
                   <div>
                     <CardTitle className="text-xl text-foreground">
                       {program.first_name}
-                      <span className="text-destructive">.exe</span>
+                      <span className="text-medium-red">.exe</span>
                     </CardTitle>
                     <div className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
                       <Users className="h-4 w-4" />
@@ -104,7 +104,7 @@ const UserPrograms = () => {
                 </div>
 
                 <div className="flex justify-between items-center gap-4">
-                  <div className="px-3 py-1 bg-destructive/10 rounded border border-destructive/20 text-sm text-destructive flex items-center gap-2">
+                  <div className="px-3 py-1 bg-medium-red/10 rounded border border-medium-red/20 text-sm text-medium-red flex items-center gap-2">
                     <Sparkles className="h-4 w-4" />
                     {program.fitness_goal}
                   </div>
@@ -119,7 +119,7 @@ const UserPrograms = () => {
                 {/* Program details */}
                 <div className="space-y-5 pt-2">
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-md bg-destructive/10 text-destructive mt-0.5">
+                    <div className="p-2 rounded-md bg-medium-red/10 text-medium-red mt-0.5">
                       <Dumbbell className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
@@ -135,7 +135,7 @@ const UserPrograms = () => {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-md bg-destructive/10 text-destructive mt-0.5">
+                    <div className="p-2 rounded-md bg-medium-red/10 text-medium-red mt-0.5">
                       <AppleIcon className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
@@ -149,7 +149,7 @@ const UserPrograms = () => {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-md bg-destructive/10 text-destructive mt-0.5">
+                    <div className="p-2 rounded-md bg-medium-red/10 text-medium-red mt-0.5">
                       <ShieldIcon className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
@@ -166,7 +166,7 @@ const UserPrograms = () => {
                 {/* Program description */}
                 <div className="mt-5 pt-5 border-t border-border">
                   <div className="text-sm text-muted-foreground">
-                    <span className="text-destructive">&gt; </span>
+                    <span className="text-medium-red">&gt; </span>
                     {program.workout_plan.description.substring(0, 120)}...
                   </div>
                 </div>
@@ -174,7 +174,7 @@ const UserPrograms = () => {
 
               <CardFooter className="px-5 py-4 border-t border-border">
                 <Link href={`/programs/${program.id}`} className="w-full">
-                  <Button className="w-full bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                  <Button className="w-full bg-medium-red text-medium-red-foreground hover:bg-medium-red/90">
                     View Program Details
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -189,7 +189,7 @@ const UserPrograms = () => {
           <Link href="/generate-program">
             <Button
               size="lg"
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 px-8 py-6 text-lg"
+              className="bg-medium-red text-medium-red-foreground hover:bg-medium-red/90 px-8 py-6 text-lg"
             >
               Generate Your Program
               <Sparkles className="ml-2 h-5 w-5" />

@@ -1,4 +1,4 @@
-import TerminalOverlay from "@/components/TerminalOverlay";
+
 import { Button } from "@/components/ui/button";
 import UserPrograms from "@/components/UserPrograms";
 import { ArrowRightIcon } from "lucide-react";
@@ -6,53 +6,50 @@ import Link from "next/link";
 
 const HomePage = () => {
   return (
-    <div className="flex flex-col min-h-screen text-foreground overflow-hidden">
-      <section className="relative z-10 py-24 flex-grow">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative">
-            {/* CORNER DECORATION */}
-            <div className="absolute -top-10 left-0 w-40 h-40 border-l-2 border-t-2" />
+          <div className="flex flex-col min-h-screen text-foreground overflow-hidden bg">
+            <section className="relative z-10 py-24 flex-grow">
+              <div className="absolute inset-0">
+                <img 
+                  src='/gradienta.jpg' 
+                  alt="Background"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/40"></div>
+              </div>
+              
+              <div className="container mx-auto px-4 relative z-10 h-full flex items-center justify-center">
+              <div className="flex flex-col items-center justify-center text-center w-full max-w-3xl space-y-8">
+                <h1 className="text-4xl sm:text-1xl md:text-6xl lg:text-7xl font-bold tracking-tight flex flex-col sm:flex-row items-center sm:items-baseline justify-center gap-y-2 sm:gap-x-2 text-center ml-15">
+                  <span className="text-foreground whitespace-nowrap">Transform Your</span>
+                  <span className="scroll-window scroll-window w-full sm:w-auto flex justify-center sm:inline-flex">
+                    <ul className="scroll-list">
+                      <li className="text-medium-red">Body.</li>
+                      <li className="text-medium-red">Mind.</li>
+                      <li className="text-medium-red">Soul.</li>
+                      <li className="text-medium-red">Lifestyle.</li>
+                    </ul>
+                  </span>
+                </h1>
 
-            {/* LEFT SIDE CONTENT */}
-            <div className="lg:col-span-7 space-y-8 relative">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                <div>
-                  <span className="text-foreground">Transform</span>
-                </div>
-                <div>
-                  <span className="text-destructive">Your Body</span>
-                </div>
-                <div className="pt-2">
-                  <span className="text-foreground">With Advanced</span>
-                </div>
-                <div className="pt-2">
-                  <span className="text-foreground">AI</span>
-                  <span className="text-destructive"> Technology</span>
-                </div>
-              </h1>
-
-              {/* SEPERATOR LINE */}
-              <div className="h-px w-full bg-gradient-to-r from-destructive via-secondary to-destructive opacity-50"></div>
-
-              <p className="text-xl text-muted-foreground w-2/3">
-                Talk to our AI assistant and get personalized diet plans and workout routines
-                designed just for you
+              <p className="text-xl text-muted-foreground max-w-2xl">
+              Talk to our AI assistant and get personalized diet plans and workout routines
+              designed just for you
               </p>
 
               {/* STATS */}
-              <div className="flex items-center gap-10 py-6 font-mono">
-                <div className="flex flex-col">
-                  <div className="text-2xl text-destructive">500+</div>
+              <div className="flex items-center justify-center gap-10 py-6 font-mono">
+                <div className="flex flex-col items-center">
+                  <div className="text-2xl text-red">500+</div>
                   <div className="text-xs uppercase tracking-wider">ACTIVE USERS</div>
                 </div>
                 <div className="h-12 w-px bg-gradient-to-b from-transparent via-border to-transparent"></div>
-                <div className="flex flex-col">
-                  <div className="text-2xl text-destructive">3min</div>
+                <div className="flex flex-col items-center">
+                  <div className="text-2xl text-red">3min</div>
                   <div className="text-xs uppercase tracking-wider">GENERATION</div>
                 </div>
                 <div className="h-12 w-px bg-gradient-to-b from-transparent via-border to-transparent"></div>
-                <div className="flex flex-col">
-                  <div className="text-2xl text-destructive">100%</div>
+                <div className="flex flex-col items-center">
+                  <div className="text-2xl text-red">100%</div>
                   <div className="text-xs uppercase tracking-wider">PERSONALIZED</div>
                 </div>
               </div>
@@ -62,7 +59,7 @@ const HomePage = () => {
                 <Button
                   size="lg"
                   asChild
-                  className="overflow-hidden bg-destructive text-destructive-foreground px-8 py-6 text-lg font-medium"
+                  className="overflow-hidden bg-red text-dark-red-foreground px-8 py-6 text-lg font-medium"
                 >
                   <Link href={"/generate-program"} className="flex items-center font-mono">
                     Build Your Program
@@ -71,51 +68,8 @@ const HomePage = () => {
                 </Button>
               </div>
             </div>
-
-            {/* RIGHT SIDE CONTENT */}
-            <div className="lg:col-span-5 relative">
-              {/* CORNER PIECES */}
-              <div className="absolute -inset-4 pointer-events-none">
-                <div className="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-border" />
-                <div className="absolute top-0 right-0 w-16 h-16 border-r-2 border-t-2 border-border" />
-                <div className="absolute bottom-0 left-0 w-16 h-16 border-l-2 border-b-2 border-border" />
-                <div className="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-border" />
-              </div>
-
-              {/* IMAGE CONTANINER */}
-              <div className="relative aspect-square max-w-lg mx-auto">
-                <div className="relative overflow-hidden rounded-lg bg-cyber-black">
-                  <img
-                    src="/hero-ai3.png"
-                    alt="AI Fitness Coach"
-                    className="size-full object-cover object-center"
-                  />
-
-                  {/* SCAN LINE */}
-                  <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,transparent_calc(50%-1px),var(--cyber-glow-destructive)_50%,transparent_calc(50%+1px),transparent_100%)] bg-[length:100%_8px] animate-scanline pointer-events-none" />
-
-                  {/* DECORATIONS ON TOP THE IMAGE */}
-                  <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-1/3 left-1/3 w-1/3 h-1/3 border border-destructive/40 rounded-full" />
-
-                    {/* Targeting lines */}
-                    <div className="absolute top-1/2 left-0 w-1/4 h-px bg-destructive/50" />
-                    <div className="absolute top-1/2 right-0 w-1/4 h-px bg-destructive/50" />
-                    <div className="absolute top-0 left-1/2 h-1/4 w-px bg-destructive/50" />
-                    <div className="absolute bottom-0 left-1/2 h-1/4 w-px bg-destructive/50" />
-                  </div>
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-                </div>
-
-                {/* TERMINAL OVERLAY */}
-                <TerminalOverlay />
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
-
+        </section>
       <UserPrograms />
     </div>
   );

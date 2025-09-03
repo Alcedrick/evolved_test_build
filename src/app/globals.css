@@ -37,6 +37,10 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-red: var(--red);
+  --color-medium-red: var(--medium-red);
+  --color-dark-red: var(--dark-red);
+  --color-light-black: var(--light-black);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -47,27 +51,32 @@
   /* Base Variables */
   --radius: 0.625rem;
 
+  --red: #d40e25;
+  --medium-red: #ff0231;
+  --dark-red: #a00c30;
+  --light-black: #0c0707d5;
+
   /* Cyberpunk Theme Colors */
   --cyber-black: #000000;
   --cyber-dark: #0a0c14;
-  --cyber-blue-bright: #18cef2; 
   --cyber-blue: #1089bd; 
+  --cyber-blue-bright: #44ff1e;
   --cyber-blue-dark: #0b4a7d; 
   --cyber-blue-glow: #38bdf8; 
   --cyber-accent: #0ff4;
 
   /* Background */
-  --background: var(--cyber-dark);
+  --background: #140102;  /* #a00c30 */
   --foreground: #f2f2f2;
 
   /* Card and popover elements */
-  --card: #111827;
+  --card: #1b1b1b3a;
   --card-foreground: #f2f2f2;
   --popover: #111827;
   --popover-foreground: #f2f2f2;
 
   /* Primary - Main blue */
-  --primary: var(--cyber-blue-bright);
+  --primary: var(--red);
   --primary-foreground: var(--cyber-dark);
 
   /* Secondary - Darker blue */
@@ -118,7 +127,7 @@
 
 .dark {
   /* Background */
-  --background: var(--cyber-dark);
+  --background: #140102;
   --foreground: #f2f2f2;
 
   /* Card and popover elements */
@@ -234,4 +243,41 @@
 
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.scroll-window {
+  display: inline-flex;       /* inline with text */
+  position: relative;
+  min-height: 66px;            /* match line height */
+  vertical-align: baseline;   /* ensure same text line */
+  width: 7ch;;
+}
+
+.scroll-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.scroll-list li {
+  position: absolute;
+  top: 0;
+  left: 15;
+  opacity: 0;
+  animation: fadeInOut 8s infinite;
+  white-space: nowrap;  
+}
+
+
+.scroll-list li:nth-child(1) { animation-delay: 0s; }
+.scroll-list li:nth-child(2) { animation-delay: 2s; }
+.scroll-list li:nth-child(3) { animation-delay: 4s; }
+.scroll-list li:nth-child(4) { animation-delay: 6s; }
+
+@keyframes fadeInOut {
+  0%   { opacity: 0; }
+  5%   { opacity: 1; }
+  25%  { opacity: 1; }
+  30%  { opacity: 0; }
+  100% { opacity: 0; }
 }
