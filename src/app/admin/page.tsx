@@ -32,7 +32,7 @@ export default function AdminPage() {
   });
 
   // Plan Stats
-  const activePlans = plans.filter((p: any) => p.isActive);
+  // 
   const totalPlans = plans.length;
   const mostCommonGoal = (() => {
     const goalCount: Record<string, number> = {};

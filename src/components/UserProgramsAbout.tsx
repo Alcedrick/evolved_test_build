@@ -4,10 +4,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, } from "@/components/ui/carousel"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -228,7 +226,7 @@ const UserProgramsAbout = () => {
                               {program.diet_plan.title}
                             </h3>
                             <p className="text-muted-foreground">
-                              Optimized nutrition & daily calories: {program.diet_plan.dailyCalories}
+                              Optimized nutrition & daily calories: 
                             </p>
                           </div>
                             
