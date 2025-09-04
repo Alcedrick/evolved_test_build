@@ -3,6 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, } from "@/components/ui/carousel"
 import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
   ChevronRight,
   Dumbbell,
   Sparkles,
@@ -64,6 +74,8 @@ const UserProgramsAbout = () => {
             </div>
           </div>
         </div>
+        
+          
 
         {/* Program Cards */}
         <Carousel className="w-full">
@@ -178,12 +190,56 @@ const UserProgramsAbout = () => {
                   </CardContent>
           
                   <CardFooter className="px-5 py-4 border-t border-border">
-                    <Link href={`/programs/${program.id}`} className="w-full">
-                      <Button className="w-full bg-medium-red text-medium-red-foreground hover:bg-medium-red/90">
-                        View Program Details
-                        <ChevronRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button className="w-full bg-medium-red text-medium-red-foreground hover:bg-medium-red/90">
+                            View Program Details
+                            <ChevronRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </DialogTrigger>
+                              
+                        <DialogContent className="sm:max-w-5xl h-[80vh] w-full bg-light-black border border-border overflow-y-auto">
+                          <DialogHeader>
+                            <DialogTitle className="text-2xl text-foreground">
+                              {program.first_name}
+                              <span className="text-medium-red">.exe</span>
+                              
+                            </DialogTitle>
+                            <DialogDescription>
+                              Personalized program details
+                            </DialogDescription>
+                            
+                          </DialogHeader>
+                            
+                        <div className="space-y-6">
+                          {/* Workout Plan */}
+                          <div>
+                            <h3 className="font-semibold text-medium-red mb-2">
+                              {program.workout_plan.title}
+                            </h3>
+                            <p className="text-muted-foreground">
+                              {program.workout_plan.description}
+                            </p>
+                          </div>
+                            
+                          {/* Diet Plan */}
+                          <div>
+                            <h3 className="font-semibold text-medium-red mb-2">
+                              {program.diet_plan.title}
+                            </h3>
+                            <p className="text-muted-foreground">
+                              Optimized nutrition & daily calories: {program.diet_plan.dailyCalories}
+                            </p>
+                          </div>
+                            
+                          {/* Metadata */}
+                          <div className="text-sm text-muted-foreground">
+                            Fitness Level: {program.fitness_level} <br />
+                            Age: {program.age} • {program.workout_days}d/week
+                          </div>
+                        </div>
+                      </DialogContent>  
+                    </Dialog>
                   </CardFooter>
                 </Card>
               </div>

@@ -16,8 +16,8 @@ const Navbar = () => {
                     <div className="p-1 bg-primary/10 rounded">
                       <Dumbbell className="w-4 h-4 text-default" />
                     </div>
-                    <span className="text-xl font-bold font-mono">
-                      <span className="text-destructive">Evolved </span>Fitness
+                    <span className="text-xl font-bold font-sans">
+                      <span className="text-destructive">Lift</span>App
                     </span>
                 </Link>
 

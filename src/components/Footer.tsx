@@ -16,11 +16,11 @@ const Footer = () => {
                 <Dumbbell className="w-4 h-4 text-medium-red" />
               </div>
               <span className="text-xl font-bold font-mono">
-                Evolved <span className="text-medium-red">Fitness</span>
+                Lift<span className="text-medium-red">App</span>
               </span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Evolved Fitness - All rights reserved
+              © {new Date().getFullYear()} LiftApp - All rights reserved
             </p>
           </div>
 

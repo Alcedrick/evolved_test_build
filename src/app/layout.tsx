@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Evolved Fitness',
+  title: 'LiftApp',
   description: 'Discover your path to fitness',
 }
 

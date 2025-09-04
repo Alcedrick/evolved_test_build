@@ -1,52 +1,114 @@
-import { currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { createClerkClient } from "@clerk/backend";
+"use client";
 
-const clerkClient = createClerkClient({
-  secretKey: process.env.CLERK_SECRET_KEY!, // ✅ explicit
-});
+import { useState } from "react";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
-export default async function AdminPage() {
-  const user = await currentUser();
-  if (!user || user.publicMetadata.role !== "admin") {
-    redirect("/");
-  }
+export default function AdminPage() {
+  const users = useQuery(api.users.getAllUsers); // you'll add this query
+  const plans = useQuery(api.plans.getAllPlans); // you'll add this too
 
-  const clerkUsers = await clerkClient.users.getUserList({
-    orderBy: "-created_at",
-    limit: 50,
+  const [search, setSearch] = useState("");
+  const [showPaidOnly, setShowPaidOnly] = useState(false);
+
+  if (!users || !plans) return <div>Loading...</div>;
+
+  // Filter users
+  const filteredUsers = users.filter((u: any) => {
+    const matchesSearch =
+      u.name.toLowerCase().includes(search.toLowerCase()) ||
+      u.email.toLowerCase().includes(search.toLowerCase());
+    const matchesPaid = showPaidOnly ? u.paid : true;
+    return matchesSearch && matchesPaid;
   });
 
+  // Plan Stats
+  const activePlans = plans.filter((p: any) => p.isActive);
+  const totalPlans = plans.length;
+  const mostCommonGoal = (() => {
+    const goalCount: Record<string, number> = {};
+    plans.forEach((p: any) => {
+      goalCount[p.fitness_goal] = (goalCount[p.fitness_goal] || 0) + 1;
+    });
+    return Object.entries(goalCount).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
+  })();
+
   return (
-    <div className="flex flex-col min-h-screen text-foreground pb-6 pt-24">
-      <div className="container mx-auto px-4 h-full max-w-5xl">
-        <h1 className="text-3xl font-bold font-mono text-center mb-6">
-          Admin <span className="text-primary">Dashboard</span>
-        </h1>
-        <div className="overflow-x-auto rounded-lg border border-border shadow-md">
-          <table className="min-w-full bg-background">
-            <thead>
-              <tr className="bg-muted text-left">
-                <th className="py-2 px-4">Name</th>
-                <th className="py-2 px-4">Email</th>
-                <th className="py-2 px-4">Role</th>
-                <th className="py-2 px-4">Created</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clerkUsers.data.map((u) => (
-                <tr key={u.id} className="border-b">
-                  <td className="py-2 px-4">
-                    {u.firstName || ""} {u.lastName || ""}
-                  </td>
-                  <td className="py-2 px-4">{String(u.emailAddresses[0]?.emailAddress)}</td>
-                  <td className="py-2 px-4">{String(u.publicMetadata?.role || "user")}</td>
-                  <td className="py-2 px-4">{String(new Date(u.createdAt).toLocaleDateString())}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="p-8 space-y-8">
+      {/* Plan Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Total Users</CardTitle>
+          </CardHeader>
+          <CardContent>{users.length}</CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Total Plans</CardTitle>
+          </CardHeader>
+          <CardContent>{totalPlans}</CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Most Common Goal</CardTitle>
+          </CardHeader>
+          <CardContent>{mostCommonGoal}</CardContent>
+        </Card>
+      </div>
+
+      {/* Filters */}
+      <div className="flex items-center gap-4">
+        <div className="flex-1">
+          <Label htmlFor="search">Search Users</Label>
+          <Input
+            id="search"
+            placeholder="Search by name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="paid"
+            checked={showPaidOnly}
+            onCheckedChange={(val: any) => setShowPaidOnly(!!val)}
+          />
+          <Label htmlFor="paid">Paid Only</Label>
+        </div>
+      </div>
+
+      {/* User Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-border text-sm">
+          <thead className="bg-muted/30">
+            <tr>
+              <th className="px-4 py-2 text-left">Name</th>
+              <th className="px-4 py-2 text-left">Email</th>
+              <th className="px-4 py-2 text-left">Paid</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map((u: any) => (
+              <tr key={u._id} className="border-t">
+                <td className="px-4 py-2">{u.name}</td>
+                <td className="px-4 py-2">{u.email}</td>
+                <td className="px-4 py-2">
+                  {u.paid ? "✅" : "❌"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

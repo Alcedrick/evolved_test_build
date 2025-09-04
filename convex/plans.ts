@@ -59,3 +59,10 @@ export const getUserPlans = query({
     return plans;
   },
 });
+
+export const getAllPlans = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("plans").collect();
+  },
+});
