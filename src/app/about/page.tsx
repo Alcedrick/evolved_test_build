@@ -1,4 +1,4 @@
-import UserPrograms from "@/components/UserPrograms";
+import UserPrograms from "@/components/UserProgramsAbout";
 
 
 const aboutPage = () => {

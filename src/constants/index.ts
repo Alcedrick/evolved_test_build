@@ -113,4 +113,118 @@ export const USER_PROGRAMS = [
         "This vegetarian meal plan ensures adequate protein intake from plant sources. It focuses on whole foods and supports your active lifestyle while accommodating knee issues with anti-inflammatory food choices.",
     },
   },
+  {
+    id: 4,
+    first_name: "Sarah",
+    profilePic: "https://randomuser.me/api/portraits/men/74.jpg",
+    fitness_goal: "Weight Loss",
+    height: "5'6\"",
+    weight: "165 lbs",
+    age: 34,
+    workout_days: 4,
+    injuries: "Lower back pain",
+    fitness_level: "Beginner",
+    equipment_access: "Home gym",
+    dietary_restrictions: "Lactose intolerant",
+    workout_plan: {
+      title: "Beginner Weight Loss Program",
+      weekly_schedule: [
+        { day: "Monday", focus: "Full Body Cardio", duration: "30 min" },
+        { day: "Wednesday", focus: "Core & Lower Body", duration: "30 min" },
+        { day: "Friday", focus: "HIIT Training", duration: "25 min" },
+        { day: "Saturday", focus: "Active Recovery", duration: "40 min" },
+      ],
+      description:
+        "This program focuses on building a consistent exercise habit with joint-friendly movements that protect your lower back. The mix of cardio and strength training supports weight loss while preserving muscle mass.",
+    },
+    diet_plan: {
+      title: "Balanced Nutrition Plan (Lactose-Free)",
+      daily_calories: "1,600 calories",
+      macros: { protein: "30%", carbs: "40%", fats: "30%" },
+      meal_examples: [
+        { meal: "Breakfast", example: "Oatmeal with almond milk, berries, and chia seeds" },
+        { meal: "Lunch", example: "Grilled chicken salad with olive oil dressing" },
+        { meal: "Dinner", example: "Baked salmon with quinoa and roasted vegetables" },
+        { meal: "Snacks", example: "Apple with almond butter, dairy-free yogurt with nuts" },
+      ],
+      description:
+        "This meal plan avoids dairy products while providing balanced nutrition to support weight loss goals. Focus is on whole foods with adequate protein to preserve muscle during weight loss.",
+    },
+  },
+  {
+    id: 5,
+    first_name: "Sarah",
+    profilePic: "https://randomuser.me/api/portraits/men/74.jpg",
+    fitness_goal: "Weight Loss",
+    height: "5'6\"",
+    weight: "165 lbs",
+    age: 34,
+    workout_days: 4,
+    injuries: "Lower back pain",
+    fitness_level: "Beginner",
+    equipment_access: "Home gym",
+    dietary_restrictions: "Lactose intolerant",
+    workout_plan: {
+      title: "Beginner Weight Loss Program",
+      weekly_schedule: [
+        { day: "Monday", focus: "Full Body Cardio", duration: "30 min" },
+        { day: "Wednesday", focus: "Core & Lower Body", duration: "30 min" },
+        { day: "Friday", focus: "HIIT Training", duration: "25 min" },
+        { day: "Saturday", focus: "Active Recovery", duration: "40 min" },
+      ],
+      description:
+        "This program focuses on building a consistent exercise habit with joint-friendly movements that protect your lower back. The mix of cardio and strength training supports weight loss while preserving muscle mass.",
+    },
+    diet_plan: {
+      title: "Balanced Nutrition Plan (Lactose-Free)",
+      daily_calories: "1,600 calories",
+      macros: { protein: "30%", carbs: "40%", fats: "30%" },
+      meal_examples: [
+        { meal: "Breakfast", example: "Oatmeal with almond milk, berries, and chia seeds" },
+        { meal: "Lunch", example: "Grilled chicken salad with olive oil dressing" },
+        { meal: "Dinner", example: "Baked salmon with quinoa and roasted vegetables" },
+        { meal: "Snacks", example: "Apple with almond butter, dairy-free yogurt with nuts" },
+      ],
+      description:
+        "This meal plan avoids dairy products while providing balanced nutrition to support weight loss goals. Focus is on whole foods with adequate protein to preserve muscle during weight loss.",
+    },
+  },
+  {
+    id: 6,
+    first_name: "Sarah",
+    profilePic: "https://randomuser.me/api/portraits/men/74.jpg",
+    fitness_goal: "Weight Loss",
+    height: "5'6\"",
+    weight: "165 lbs",
+    age: 34,
+    workout_days: 4,
+    injuries: "Lower back pain",
+    fitness_level: "Beginner",
+    equipment_access: "Home gym",
+    dietary_restrictions: "Lactose intolerant",
+    workout_plan: {
+      title: "Beginner Weight Loss Program",
+      weekly_schedule: [
+        { day: "Monday", focus: "Full Body Cardio", duration: "30 min" },
+        { day: "Wednesday", focus: "Core & Lower Body", duration: "30 min" },
+        { day: "Friday", focus: "HIIT Training", duration: "25 min" },
+        { day: "Saturday", focus: "Active Recovery", duration: "40 min" },
+      ],
+      description:
+        "This program focuses on building a consistent exercise habit with joint-friendly movements that protect your lower back. The mix of cardio and strength training supports weight loss while preserving muscle mass.",
+    },
+    diet_plan: {
+      title: "Balanced Nutrition Plan (Lactose-Free)",
+      daily_calories: "1,600 calories",
+      macros: { protein: "30%", carbs: "40%", fats: "30%" },
+      meal_examples: [
+        { meal: "Breakfast", example: "Oatmeal with almond milk, berries, and chia seeds" },
+        { meal: "Lunch", example: "Grilled chicken salad with olive oil dressing" },
+        { meal: "Dinner", example: "Baked salmon with quinoa and roasted vegetables" },
+        { meal: "Snacks", example: "Apple with almond butter, dairy-free yogurt with nuts" },
+      ],
+      description:
+        "This meal plan avoids dairy products while providing balanced nutrition to support weight loss goals. Focus is on whole foods with adequate protein to preserve muscle during weight loss.",
+    },
+  },
 ];
