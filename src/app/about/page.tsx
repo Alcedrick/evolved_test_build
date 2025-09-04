@@ -1,10 +1,10 @@
-import UserPrograms from "@/components/UserProgramsAbout";
+import UserProgramsAbout from "@/components/UserProgramsAbout";
 
 
 const aboutPage = () => {
   return (
     <div>
-        <UserPrograms />
+        <UserProgramsAbout />
     </div>
   )
 }

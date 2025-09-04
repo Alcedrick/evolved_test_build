@@ -11,9 +11,9 @@ import {
   AppleIcon,
   ShieldIcon,
 } from "lucide-react";
-import { USER_PROGRAMS } from "@/constants";
+import { USER_PROGRAMS_ABOUT } from "@/constants";
 
-const UserPrograms = () => {
+const UserProgramsAbout = () => {
   return (
     <div className="w-full pb-24 pt-16 relative">
       <div className="container mx-auto max-w-6xl px-4">
@@ -68,7 +68,7 @@ const UserPrograms = () => {
         {/* Program Cards */}
         <Carousel className="w-full">
         <CarouselContent>
-          {USER_PROGRAMS.map((program) => (
+          {USER_PROGRAMS_ABOUT.map((program) => (
             <CarouselItem
               key={program.id}
               className="pl-4 md:basis-1/2 lg:basis-1/3"
@@ -215,4 +215,4 @@ const UserPrograms = () => {
   );
 };
 
-export default UserPrograms;
+export default UserProgramsAbout;
