@@ -31,42 +31,44 @@ const UserProgramsAbout = () => {
           <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-background/70">
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-full bg-medium-red"></div>
-              <span className="text-sm text-medium-red font-medium">Program Gallery</span>
+              <span className="text-sm text-medium-red font-medium">Evolved Fitness Center</span>
             </div>
-            <div className="text-sm text-muted-foreground">Featured Plans</div>
           </div>
 
           {/* HEADER CONTENT */}
           <div className="p-8 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="text-foreground">AI-Generated </span>
-              <span className="text-medium-red">Programs</span>
+              <span className="text-medium-red">About Us</span>
             </h2>
 
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10">
-              Explore personalized fitness plans our AI assistant has created for other users
+            <p className="text-m  mx-auto mb-10 text-justify indent-10 leading-loose">
+              We opened our second branch on December 2, 2022, with a simple dream: to create more than just a gym, but a place people can truly call their second home. 
+              For us, fitness isn’t only about workouts or machines, it’s about helping each person become the best version of themselves, both inside and out. What makes our gym special is the people. 
+              Our staff and coaches are approachable, friendly, and always ready to listen, guide, and cheer you on. Over time, we’ve built a good community where members support one another, celebrate wins together, and push through challenges side by side. 
+              We also believe in never standing still. Just like our members strive to grow stronger each day, we’re committed to the continuous improvement of our gym by upgrading equipment and making sure our space is always welcoming and inspiring. 
+              This is a place for people who take their fitness and quality of life seriously but also value encouragement, connection, and balance. Here, you’ll find not only a gym but also a community that grows with you every step of the way.
             </p>
 
             {/* STATS */}
             <div className="flex items-center justify-center gap-16 mt-10 font-mono">
               <div className="flex flex-col items-center">
-                <p className="text-3xl text-medium-red">500+</p>
+                <p className="text-3xl text-medium-red font-bold">700+</p>
                 <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
-                  PROGRAMS
+                  Members
                 </p>
               </div>
               <div className="w-px h-12 bg-border"></div>
               <div className="flex flex-col items-center">
-                <p className="text-3xl text-medium-red">3min</p>
+                <p className="text-3xl text-medium-red font-bold">21</p>
                 <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
-                  CREATION TIME
+                  Operating Hours
                 </p>
               </div>
               <div className="w-px h-12 bg-border"></div>
               <div className="flex flex-col items-center">
-                <p className="text-3xl text-medium-red">100%</p>
+                <p className="text-3xl text-medium-red font-bold">3</p>
                 <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
-                  PERSONALIZED
+                  Years Strong
                 </p>
               </div>
             </div>
@@ -261,7 +263,7 @@ const UserProgramsAbout = () => {
             </Button>
           </Link>
           <p className="text-muted-foreground mt-4">
-            Join 500+ users with AI-customized fitness programs
+            Gnerate your workout with AI-customized fitness programs
           </p>
         </div>
       </div>
