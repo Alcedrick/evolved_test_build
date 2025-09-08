@@ -1,10 +1,10 @@
-import UserProgramsAbout from "@/components/UserProgramsAbout";
+import CoachProfileAbout from "@/components/CoachProfileAbout";
 
 
 const aboutPage = () => {
   return (
     <div>
-        <UserProgramsAbout />
+        <CoachProfileAbout />
     </div>
   )
 }
