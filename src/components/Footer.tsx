@@ -1,5 +1,5 @@
-import { Dumbbell } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -13,9 +13,9 @@ const Footer = () => {
           <div className="flex flex-col items-center md:items-start gap-2">
             <Link href="/" className="flex items-center gap-2">
               <div className="p-1 bg-medium-red/10 rounded">
-                <Dumbbell className="w-4 h-4 text-medium-red" />
+                <Image src="/LIFTAPP_LOGO.png" alt="LiftApp Logo" width={100} height={100} className="w-8 h-8" />
               </div>
-              <span className="text-xl font-bold font-mono">
+              <span className="text-xl font-bold font-sans">
                 Lift<span className="text-medium-red">App</span>
               </span>
             </Link>
