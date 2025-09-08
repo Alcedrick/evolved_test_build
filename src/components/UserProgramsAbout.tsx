@@ -42,7 +42,7 @@ const UserProgramsAbout = () => {
             </h2>
 
             <p className="text-m  mx-auto mb-10 text-justify indent-10 leading-loose">
-              We opened our second branch on December 2, 2022, with a simple dream: to create more than just a gym, but a place people can truly call their second home. 
+              We opened our second branch on December 2, 2022, with a simple dream, to create more than just a gym, but a place people can truly call their second home. 
               For us, fitness isn’t only about workouts or machines, it’s about helping each person become the best version of themselves, both inside and out. What makes our gym special is the people. 
               Our staff and coaches are approachable, friendly, and always ready to listen, guide, and cheer you on. Over time, we’ve built a good community where members support one another, celebrate wins together, and push through challenges side by side. 
               We also believe in never standing still. Just like our members strive to grow stronger each day, we’re committed to the continuous improvement of our gym by upgrading equipment and making sure our space is always welcoming and inspiring. 
