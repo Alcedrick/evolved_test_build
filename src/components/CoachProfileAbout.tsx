@@ -6,7 +6,6 @@ import { FaTiktok } from "react-icons/fa";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -22,13 +21,11 @@ import {
   BookOpenText,
   User,
   FileBadge,
-  Clock,
   AppleIcon,
   ShieldIcon,
   Facebook,
   Instagram,
-  Youtube,
-  Award,
+  Youtube
 } from "lucide-react";
 import { COACH_PROFILE_ABOUT } from "@/constants/index";
 

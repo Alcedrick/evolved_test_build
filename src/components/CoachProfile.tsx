@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, } from "@/components/ui/carousel"
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import { FaTiktok } from "react-icons/fa";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -22,13 +21,11 @@ import {
   BookOpenText,
   User,
   FileBadge,
-  Clock,
   AppleIcon,
   ShieldIcon,
   Facebook,
   Instagram,
-  Youtube,
-  Award,
+  Youtube
 } from "lucide-react";
 import { COACH_PROFILE } from "@/constants/index";
 
