@@ -94,7 +94,7 @@ const CoachProfile = () => {
                   <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-background/70">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-medium-red"></div>
-                      <span className="text-sm text-medium-red">COACH.{program.id}</span>
+                      <span className="text-sm text-medium-red">Coach.{program.id}</span>
                     </div>
                     <div className="text-sm text-muted-foreground">
                       {program.availability}
