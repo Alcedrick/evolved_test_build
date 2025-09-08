@@ -45,6 +45,7 @@ const CoachProfileAbout = () => {
 
           {/* HEADER CONTENT */}
           <div className="p-8 text-center">
+            {/* <img src="/evolved-logo.png" alt="Evolved Fitness Center Logo" className="block mx-auto w-50 h-auto"/> */}
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               <span className="text-foreground">About</span>
               <span className="text-medium-red"> Us</span>
@@ -344,7 +345,7 @@ const CoachProfileAbout = () => {
             </Button>
           </Link>
           <p className="text-muted-foreground mt-4">
-            Gnerate your workout with AI-customized Fitness Programs
+            Generate your workout with AI-customized Fitness Programs
           </p>
         </div>
       </div>

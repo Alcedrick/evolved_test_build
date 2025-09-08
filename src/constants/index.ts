@@ -127,7 +127,7 @@ export const COACH_PROFILE_ABOUT = [
     card_third_subtier: "Flexibility Movement Specialist",
     programsOffered: "Personal Training, Online Coaching",
     employmentType: "Freelance / Independent Contractor",
-    achievements: "Natural Bodybuilding Australia 2024 Mens Fitness Pro Card, Natural Bodybuilding Australia 2024 Mens Fitness Overall Champion, Natural Bodybuilding Australia 2024 Mens Physique Open 2nd Place, Natural Bodybuilding Australia Mens Physique Novice 2nd Place, Young Slayer 2024 Mens Physique Natural 2nd Place, Get Wheysted Physique Athlete 2018, Mr. Bulacan Bodybuilding Athlete 2016",
+    achievements: "Natural Bodybuilding Australia 2024 Men's Fitness Pro Card, Natural Bodybuilding Australia 2024 Men's Fitness Overall Champion, Natural Bodybuilding Australia 2024 Men's Physique Open 2nd Place, Natural Bodybuilding Australia Men's Physique Novice 2nd Place, Young Slayer 2024 Men's Physique Natural 2nd Place, Get Wheysted Physique Athlete 2018, Mr. Bulacan Bodybuilding Athlete 2016",
     certificates: "NBA Universe PRO CARD, The Warriors Code Stage Ready Seminar Certification 2025, IFBB Fitnes Seminar and Posing Clinic Certification 2021",
   },
   {
@@ -152,6 +152,7 @@ export const COACH_PROFILE_ABOUT = [
     card_third_subtier: "Body Recomposition Specialist",
     programsOffered: "Personal Training",
     employmentType: "Part-Time Coach",
+    achievements: "JDV Bodybuilding 2023 Men’s physique 1st Runner Up, IFBB Philippines Nationals 2023 Participant",
   },
   {
     id: 4,
