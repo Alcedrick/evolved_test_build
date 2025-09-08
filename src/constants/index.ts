@@ -71,7 +71,7 @@ export const COACH_PROFILE = [
     card_second_subtier: "Hypertrophy/Building Muscle Coach",
     card_third_subtier: "Body Recomposition Specialist",
     programsOffered: "Personal Training",
-    employmentType: "Part-Time Coach, Freelance / Independent Contractor",
+    employmentType: "Part-Time Coach",
   }
 ];
 
@@ -151,7 +151,7 @@ export const COACH_PROFILE_ABOUT = [
     card_second_subtier: "Hypertrophy/Building Muscle Coach",
     card_third_subtier: "Body Recomposition Specialist",
     programsOffered: "Personal Training",
-    employmentType: "Part-Time Coach, Freelance / Independent Contractor",
+    employmentType: "Part-Time Coach",
   },
   {
     id: 4,
