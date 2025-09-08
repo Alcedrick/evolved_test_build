@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Logo and Copyright */}
           <div className="flex flex-col items-center md:items-start gap-2">
             <Link href="/" className="flex items-center gap-2">
-              <div className="p-1 bg-medium-red/10 rounded">
+              <div className="p-1 rounded">
                 <Image src="/LIFTAPP_LOGO.png" alt="LiftApp Logo" width={100} height={100} className="w-8 h-8" />
               </div>
               <span className="text-xl font-bold font-sans">
@@ -57,10 +57,10 @@ const Footer = () => {
               Blog
             </Link>
             <Link
-              href="/help"
+              href="/faq"
               className="text-muted-foreground hover:text-medium-red transition-colors"
             >
-              Help
+              FAQs
             </Link>
           </div>
 
