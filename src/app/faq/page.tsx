@@ -42,8 +42,9 @@ const faqs = [
 ];
 
 
-const faqPage = () => {
+export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   return (
     <section className="min-h-screen bg-black text-white flex flex-col items-center p-8">
       <h1 className="text-4xl md:text-5xl font-bold text-medium-red mb-8 text-center">
@@ -56,7 +57,7 @@ const faqPage = () => {
             className="border border-gray-700 rounded-lg overflow-hidden"
           >
             <button
-              className="flex items-center justify-between w-full px-4 py-3 text-left font-semibold hover:bg-gray-900 transition"
+              className="flex items-center justify-between w-full px-4 py-3 text-left font-semibold transition"
               onClick={() =>
                 setOpenIndex(openIndex === index ? null : index)
               }
@@ -69,7 +70,7 @@ const faqPage = () => {
               )}
             </button>
             {openIndex === index && (
-              <div className="px-4 py-3 bg-gray-900 text-gray-300">
+              <div className="px-4 py-3 bg-light-black text-gray-300">
                 {faq.answer}
               </div>
             )}
@@ -79,5 +80,3 @@ const faqPage = () => {
     </section>
   );
 }
-
-export default faqPage
