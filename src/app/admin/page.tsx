@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
+
 export default function AdminPage() {
   const users = useQuery(api.users.getAllUsers); // you'll add this query
   const plans = useQuery(api.plans.getAllPlans); // you'll add this too
@@ -33,14 +34,33 @@ export default function AdminPage() {
 
   // Plan Stats
   // 
-  const totalPlans = plans.length;
-  const mostCommonGoal = (() => {
-    const goalCount: Record<string, number> = {};
-    plans.forEach((p: any) => {
-      goalCount[p.fitness_goal] = (goalCount[p.fitness_goal] || 0) + 1;
-    });
-    return Object.entries(goalCount).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
-  })();
+  // Plan Stats
+const totalPlans = plans.length;
+const mostCommonGoal = (() => {
+  if (plans.length === 0) return "N/A";
+
+  const goalCount: Record<string, number> = {};
+  plans.forEach((p: any) => {
+    // Extract a simplified goal from the plan name
+    let goal = (p.name || "").toLowerCase();
+
+    if (goal.includes("muscle")) {
+      goal = "Muscle Gain";
+    } else if (goal.includes("weight loss") || goal.includes("fat loss")) {
+      goal = "Weight Loss";
+    } else if (goal.includes("strength")) {
+      goal = "Strength";
+    } else {
+      goal = "Other";
+    }
+
+    goalCount[goal] = (goalCount[goal] || 0) + 1;
+  });
+
+  const sorted = Object.entries(goalCount).sort((a, b) => b[1] - a[1]);
+  return sorted[0]?.[0] || "N/A";
+})();
+
 
   return (
     <div className="p-8 space-y-8">
@@ -94,7 +114,9 @@ export default function AdminPage() {
             <tr>
               <th className="px-4 py-2 text-left">Name</th>
               <th className="px-4 py-2 text-left">Email</th>
+              <th className="px-4 py-2 text-left">Role</th>
               <th className="px-4 py-2 text-left">Paid</th>
+              <th className="px-4 py-2 text-left">User Created</th>
             </tr>
           </thead>
           <tbody>
@@ -102,8 +124,12 @@ export default function AdminPage() {
               <tr key={u._id} className="border-t">
                 <td className="px-4 py-2">{u.name}</td>
                 <td className="px-4 py-2">{u.email}</td>
+                <td className="px-4 py-2">{u.role ?? "user"}</td>
                 <td className="px-4 py-2">
                   {u.paid ? "✅" : "❌"}
+                </td>
+                <td className="px-4 py-2">
+                  {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "—"}
                 </td>
               </tr>
             ))}

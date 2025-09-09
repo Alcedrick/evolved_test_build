@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dialog"
 import {
   ChevronRight,
-  Dumbbell,
   Sparkles,
   BriefcaseBusiness,
   Users,
@@ -20,9 +19,8 @@ import {
   Trophy,
   BookOpenText,
   User,
+  Star,
   FileBadge,
-  AppleIcon,
-  ShieldIcon,
   Facebook,
   Instagram,
   Youtube
@@ -136,7 +134,7 @@ const CoachProfile = () => {
                       {/* workout plan */}
                       <div className="flex items-start gap-3">
                         <div className="p-2 rounded-md bg-medium-red/10 text-medium-red mt-0.5">
-                          <Dumbbell className="h-5 w-5" />
+                          <Star className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
                           <h3 className="font-medium text-foreground">
@@ -151,7 +149,7 @@ const CoachProfile = () => {
                       {/* diet plan */}
                       <div className="flex items-start gap-3">
                         <div className="p-2 rounded-md bg-medium-red/10 text-medium-red mt-0.5">
-                          <AppleIcon className="h-5 w-5" />
+                          <Star className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
                           <h3 className="font-medium text-foreground">
@@ -166,7 +164,7 @@ const CoachProfile = () => {
                       {/* safety */}
                       <div className="flex items-start gap-3">
                         <div className="p-2 rounded-md bg-medium-red/10 text-medium-red mt-0.5">
-                          <ShieldIcon className="h-5 w-5" />
+                          <Star className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
                           <h3 className="font-medium text-foreground">

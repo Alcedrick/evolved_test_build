@@ -47,44 +47,47 @@ http.route({
 
         const eventType = evt.type;
 
-        if(eventType === "user.created") {
-            const { id, first_name, last_name, image_url, email_addresses } = evt.data;
+        if (eventType === "user.created") {
+  const { id, first_name, last_name, image_url, email_addresses, public_metadata } = evt.data;
 
-            const email = email_addresses[0].email_address;
+  const email = email_addresses[0].email_address;
+  const name = `${first_name || ""} ${last_name || ""}`.trim();
 
-            const name = `${first_name || ""} ${last_name || ""}`.trim();
+  try {
+    await ctx.runMutation(api.users.syncUser, {
+      email,
+      name,
+      image: image_url,
+      clerkId: id,
+      role: typeof public_metadata?.role === "string" ? public_metadata.role : "user",
+ // 👈 sync role here
+    });
+  } catch (error) {
+    console.log("Error creating user:", error);
+    return new Response("Error creating user", { status: 500 });
+  }
+}
 
-            try {
-                await ctx.runMutation(api.users.syncUser, {
-                    email,
-                    name,
-                    image: image_url,
-                    clerkId: id,
-                });
-            } catch (error) {
-                console.log("Error creating user:", error);
-                return new Response("Error creating user", { status: 500 });
-            }
-        }
+if (eventType === "user.updated") {
+  const { id, email_addresses, first_name, last_name, image_url, public_metadata } = evt.data;
 
-        if (eventType === "user.updated") {
-           const { id, email_addresses, first_name, last_name, image_url } = evt.data;
+  const email = email_addresses[0].email_address;
+  const name = `${first_name || ""} ${last_name || ""}`.trim();
 
-           const email = email_addresses[0].email_address;
-           const name = `${first_name || ""} ${last_name || ""}`.trim();
+  try {
+    await ctx.runMutation(api.users.updateUser, {
+      clerkId: id,
+      email,
+      name,
+      image: image_url,
+      role: typeof public_metadata?.role === "string" ? public_metadata.role : "user", // 👈 sync role here
+    });
+  } catch (error) {
+    console.log("Error updating user:", error);
+    return new Response("Error updating user", { status: 500 });
+  }
+}
 
-           try {
-             await ctx.runMutation(api.users.updateUser, {
-               clerkId: id,
-               email,
-               name,
-               image: image_url,
-             });
-           } catch (error) {
-             console.log("Error updating user:", error);
-             return new Response("Error updating user", { status: 500 });
-           }
-        }
 
         return new Response("Webhooks processed successfully", {status: 200});
     }),

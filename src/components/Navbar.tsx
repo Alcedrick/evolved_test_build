@@ -22,7 +22,7 @@ const Navbar = () => {
                       <Image src="/LIFTAPP_LOGO.png" alt="LiftApp Logo" width={100} height={100} className="w-8 h-8" />
                     </div>
                     <span className="text-xl font-bold font-sans">
-                      <span className="text-destructive">Lift</span>App
+                      <span className="text-medium-red">Lift</span>App
                     </span>
                 </Link>
 

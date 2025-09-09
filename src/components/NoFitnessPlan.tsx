@@ -9,7 +9,7 @@ const NoFitnessPlan = () => {
       <CornerElements />
 
       <h2 className="text-2xl font-bold mb-4 font-mono">
-        <span className="text-primary">No</span> fitness plans yet
+        <span className="text-medium-red">No</span> fitness plans yet
       </h2>
       <p className="text-muted-foreground mb-6 max-w-md mx-auto">
         Start by creating a personalized fitness and diet plan tailored to your specific goals and

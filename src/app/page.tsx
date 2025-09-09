@@ -39,17 +39,17 @@ const HomePage = () => {
               {/* STATS */}
               <div className="flex items-center justify-center gap-10 py-6 font-mono">
                 <div className="flex flex-col items-center">
-                  <div className="text-2xl text-red">500+</div>
+                  <div className="text-2xl text-medium-red">500+</div>
                   <div className="text-xs uppercase tracking-wider">ACTIVE USERS</div>
                 </div>
                 <div className="h-12 w-px bg-gradient-to-b from-transparent via-border to-transparent"></div>
                 <div className="flex flex-col items-center">
-                  <div className="text-2xl text-red">3min</div>
+                  <div className="text-2xl text-medium-red">3min</div>
                   <div className="text-xs uppercase tracking-wider">GENERATION</div>
                 </div>
                 <div className="h-12 w-px bg-gradient-to-b from-transparent via-border to-transparent"></div>
                 <div className="flex flex-col items-center">
-                  <div className="text-2xl text-red">100%</div>
+                  <div className="text-2xl text-medium-red">100%</div>
                   <div className="text-xs uppercase tracking-wider">PERSONALIZED</div>
                 </div>
               </div>

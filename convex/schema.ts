@@ -8,6 +8,7 @@ export default defineSchema({
         image: v.optional(v.string()),
         clerkId: v.string(),
         role: v.optional(v.string()),
+        createdAt: v.optional(v.number()),
     }).index("by_clerk_id", ["clerkId"]),
 
     plans: defineTable({
