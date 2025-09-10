@@ -1,12 +1,16 @@
 import { UserResource } from "@clerk/types";
 import CornerElements from "./CornerElements";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const ProfileHeader = ({ user }: { user: UserResource | null | undefined }) => {
   if (!user) return null;
+
   return (
-    <div className="mb-10 relative backdrop-blur-sm border border-border  p-6">
+    <div className="mb-10 relative backdrop-blur-sm border border-border p-6">
       <CornerElements />
 
+      {/* User Info */}
       <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
         <div className="relative">
           {user.imageUrl ? (
@@ -43,7 +47,17 @@ const ProfileHeader = ({ user }: { user: UserResource | null | undefined }) => {
           </p>
         </div>
       </div>
+
+      {/* Pay Button - bottom right */}
+      <div className="absolute bottom-4 right-4">
+        <Link href="/checkout">
+          <Button className="bg-medium-red text-white hover:bg-medium-red/90 shadow-lg rounded-lg px-6 py-2">
+            Pay Now
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };
+
 export default ProfileHeader;
