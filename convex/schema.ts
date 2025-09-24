@@ -37,4 +37,11 @@ export default defineSchema({
         }),
         isActive: v.boolean(),
     }).index("by_user_id", ["userId"]).index("by_active", ["isActive"]),
+
+    attendance: defineTable({
+        userId: v.string(),
+        timestamp: v.number(),
+        type: v.string(), // "entry" | "exit"
+        scannedBy: v.optional(v.string()), // staff userId
+    }).index("by_user_id", ["userId"]),
 })

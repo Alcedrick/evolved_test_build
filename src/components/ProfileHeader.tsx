@@ -7,14 +7,15 @@ const ProfileHeader = ({ user }: { user: UserResource | null | undefined }) => {
   if (!user) return null;
 
   return (
-    <div className="mb-10 relative backdrop-blur-sm border border-border p-6">
+    <div className="mb-10 relative backdrop-blur-sm border border-border p-4 sm:p-6 rounded-lg">
       <CornerElements />
 
       {/* User Info */}
       <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-        <div className="relative">
+        {/* Avatar */}
+        <div className="relative flex-shrink-0">
           {user.imageUrl ? (
-            <div className="relative w-24 h-24 overflow-hidden rounded-lg">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 overflow-hidden rounded-lg">
               <img
                 src={user.imageUrl}
                 alt={user.fullName || "Profile"}
@@ -22,8 +23,8 @@ const ProfileHeader = ({ user }: { user: UserResource | null | undefined }) => {
               />
             </div>
           ) : (
-            <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center">
-              <span className="text-3xl font-bold text-primary">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center">
+              <span className="text-2xl sm:text-3xl font-bold text-primary">
                 {user.fullName?.charAt(0) || "U"}
               </span>
             </div>
@@ -31,9 +32,10 @@ const ProfileHeader = ({ user }: { user: UserResource | null | undefined }) => {
           <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-green-500 border-2 border-background"></div>
         </div>
 
-        <div className="flex-1">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-            <h1 className="text-3xl font-bold tracking-tight">
+        {/* User Details */}
+        <div className="flex-1 w-full">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
               <span className="text-foreground">{user.fullName}</span>
             </h1>
             <div className="flex items-center bg-cyber-terminal-bg backdrop-blur-sm border border-border rounded px-3 py-1">
@@ -42,16 +44,16 @@ const ProfileHeader = ({ user }: { user: UserResource | null | undefined }) => {
             </div>
           </div>
           <div className="h-px w-full bg-gradient-to-r from-primary via-secondary to-primary opacity-50 my-2"></div>
-          <p className="text-muted-foreground font-mono">
+          <p className="text-muted-foreground font-mono break-all">
             {user.primaryEmailAddress?.emailAddress}
           </p>
         </div>
       </div>
 
-      {/* Pay Button - bottom right */}
-      <div className="absolute bottom-4 right-4">
+      {/* Pay Button */}
+      <div className="mt-6 md:mt-0 md:absolute md:bottom-4 md:right-4 w-full md:w-auto">
         <Link href="/checkout">
-          <Button className="bg-medium-red text-white hover:bg-medium-red/90 shadow-lg rounded-lg px-6 py-2">
+          <Button className="w-full md:w-auto bg-medium-red text-white hover:bg-medium-red/90 shadow-lg rounded-lg px-6 py-2">
             Pay Now
           </Button>
         </Link>

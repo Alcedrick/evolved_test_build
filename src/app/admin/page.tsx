@@ -5,16 +5,16 @@ import { useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { api } from "../../../convex/_generated/api";
-
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent, } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { CheckCircle2, AlertCircle } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Scanner } from "@yudiel/react-qr-scanner";
+import { useMutation } from "convex/react";
 
 export default function AdminPage() {
   const { user, isLoaded } = useUser();
@@ -23,8 +23,21 @@ export default function AdminPage() {
   // ✅ hooks run once, always in the same order
   const users = useQuery(api.users.getAllUsers);
   const plans = useQuery(api.plans.getAllPlans);
+
   const [search, setSearch] = useState("");
   const [showPaidOnly, setShowPaidOnly] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
+
+
+  const logAttendance = useMutation(api.attendance.logAttendance);
+  const [lastScan, setLastScan] = useState<string | null>(null);
+  const [scanType, setScanType] = useState<"entry" | "exit" | null>(null);
+
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [showLogs, setShowLogs] = useState(false);
+
+  const logs = useQuery(api.attendance.getLogsByUser, selectedUser ? { clerkId: selectedUser.clerkId } : "skip");
+
 
   // Redirect if not admin
   useEffect(() => {
@@ -37,6 +50,15 @@ export default function AdminPage() {
       router.replace("/"); // not admin
     }
   }, [isLoaded, user, router]);
+
+  // Auto-dismiss effect
+  useEffect(() => {
+    if (feedback) {
+      const timer = setTimeout(() => setFeedback(null), 3000); // 3 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [feedback]);
+
 
   // Loading states
   if (!isLoaded) return <div>Loading user...</div>;
@@ -74,6 +96,42 @@ export default function AdminPage() {
     const sorted = Object.entries(goalCount).sort((a, b) => b[1] - a[1]);
     return sorted[0]?.[0] || "N/A";
   })();
+
+
+  const handleScan = async (result: string) => {
+    if (result && result !== lastScan && scanType) {
+      setLastScan(result);
+
+      try {
+        await logAttendance({
+          userId: result,
+          type: scanType,
+          staffId: user?.id,
+        });
+
+        setFeedback({
+          type: "success",
+          message: `Attendance (${scanType}) logged for user: ${result}`,
+        });
+      } catch (err) {
+        setFeedback({
+          type: "error",
+          message: "Failed to log attendance. Please try again.",
+        });
+      }
+
+      setScanType(null); // reset mode
+    }
+  };
+
+  const userMap = new Map(
+  users.map((u: any) => [
+    u.clerkId,
+    u.name?.split(" ")[0] ?? u.name ?? "Unknown",
+  ])
+);
+
+
 
   return (
     <div className="p-8 space-y-8">
@@ -140,15 +198,135 @@ export default function AdminPage() {
                 <td className="px-4 py-2">{u.role ?? "user"}</td>
                 <td className="px-4 py-2">{u.paid ? "✅" : "❌"}</td>
                 <td className="px-4 py-2">
-                  {u.createdAt
-                    ? new Date(u.createdAt).toLocaleDateString()
-                    : "—"}
+                  {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "—"}
+                </td>
+                <td className="px-4 py-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedUser(u);   // includes u.clerkId
+                      setShowLogs(true);
+                    }}
+                  >
+                    View Logs
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {/* QR Scanner */}
+      <div className="mt-8 border p-6 rounded-lg">
+        <h2 className="text-lg font-bold mb-4">Scan Member QR</h2>
+
+        {!scanType ? (
+          <div className="flex gap-4">
+            <button
+              onClick={() => setScanType("entry")}
+              className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+            >
+              Entry
+            </button>
+            <button
+              onClick={() => setScanType("exit")}
+              className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+            >
+              Exit
+            </button>
+          </div>
+        ) : (
+          <div className="w-full mt-4">
+            <p className="mb-2 font-medium text-gray-700">
+              {scanType === "entry" ? "Scanning for Entry..." : "Scanning for Exit..."}
+            </p>
+            <Scanner
+              onScan={(results) => {
+                if (results && results.length > 0) {
+                  const value = results[0].rawValue;
+                  if (value) handleScan(value);
+                }
+              }}
+              constraints={{ facingMode: "environment" }}
+            />
+            
+          </div>
+        )}
+
+        {feedback && (
+          <Alert
+            className={`mt-4 ${
+              feedback.type === "success"
+                ? "border-green-500 text-green-700"
+                : "border-red-500 text-red-700"
+            }`}
+          >
+            {feedback.type === "success" ? (
+              <CheckCircle2 className="h-4 w-4" />
+            ) : (
+              <AlertCircle className="h-4 w-4" />
+            )}
+            <AlertTitle>
+              {feedback.type === "success" ? "Success" : "Error"}
+            </AlertTitle>
+            <AlertDescription>{feedback.message}</AlertDescription>
+          </Alert>
+        )}
+      </div>
+      {/* Attendance Logs Dialog */}
+<Dialog open={showLogs} onOpenChange={setShowLogs}>
+  <DialogContent className="max-w-2xl">
+    <DialogHeader>
+      <DialogTitle>
+        Attendance Logs for {selectedUser?.name}
+      </DialogTitle>
+    </DialogHeader>
+
+    <div className="mt-4">
+      {!logs ? (
+        <p>Loading...</p>
+      ) : logs.length === 0 ? (
+        <p>No logs found.</p>
+      ) : (
+        <div className="overflow-x-auto rounded-lg border">
+          <table className="min-w-full text-sm">
+            <thead className="bg-muted/30">
+              <tr>
+                <th className="px-4 py-2 text-left">Type</th>
+                <th className="px-4 py-2 text-left">Timestamp</th>
+                <th className="px-4 py-2 text-left">Scanned By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {logs.map((log: any) => (
+                <tr key={log._id} className="border-t">
+                  <td className="px-4 py-2 font-medium">
+                    {log.type === "entry" ? (
+                      <span className="text-green-600">Entry</span>
+                    ) : (
+                      <span className="text-red-600">Exit</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-2">
+                    {new Date(log.timestamp).toLocaleString()}
+                  </td>
+                  <td className="px-4 py-2">
+                    {log.scannedBy
+                      ? userMap.get(log.scannedBy) ?? log.scannedBy
+                      : "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </DialogContent>
+</Dialog>
+
+
     </div>
   );
 }

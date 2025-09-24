@@ -16,6 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {QRCodeSVG} from "qrcode.react";
 
 const ProfilePage = () => {
   const { user } = useUser();
@@ -33,6 +34,22 @@ const ProfilePage = () => {
   return (
     <section className="relative z-10 pt-12 pb-32 flex-grow container mx-auto px-4">
       <ProfileHeader user={user} />
+
+      <div className="relative backdrop-blur-sm border border-border rounded-lg p-6 mb-6">
+        <h2 className="text-xl font-bold tracking-tight mb-4">
+          <span className="text-primary">Your</span>{" "}
+          <span className="text-foreground">QR Code</span>
+        </h2>
+
+        {userId && (
+          <div className="flex flex-col items-center gap-4">
+            <QRCodeSVG value={userId} size={180} level="H" includeMargin />
+            <p className="text-sm text-muted-foreground font-mono">
+              Show this QR at the gym entrance
+            </p>
+          </div>
+        )}
+      </div>
 
       {allPlans && allPlans?.length > 0 ? (
         <div className="space-y-8">

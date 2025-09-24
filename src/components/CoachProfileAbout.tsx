@@ -34,7 +34,7 @@ const CoachProfileAbout = () => {
         {/* HEADER- PROGRAM GALLERY */}
         <div className="bg-light-black backdrop-blur-sm border border-border rounded-lg overflow-hidden mb-16">
           {/* HEADER BAR */}
-          <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-background/70">
+          <div className="flex flex-col sm:flex-row items-start justify-start gap-4 px-5 py-3 border-b border-border bg-background/70">
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-full bg-medium-red"></div>
               <span className="text-sm text-medium-red font-medium">Evolved Fitness Center</span>
@@ -57,26 +57,20 @@ const CoachProfileAbout = () => {
             </p>
 
             {/* STATS */}
-            <div className="flex items-center justify-center gap-16 mt-10 font-mono">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 mt-10 font-mono">
               <div className="flex flex-col items-center">
                 <p className="text-3xl text-medium-red font-bold">900+</p>
-                <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
-                  Members
-                </p>
+                <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">Members</p>
               </div>
-              <div className="w-px h-12 bg-border"></div>
+              <div className="hidden sm:block w-px h-12 bg-border"></div>
               <div className="flex flex-col items-center">
                 <p className="text-3xl text-medium-red font-bold">21</p>
-                <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
-                  Operating Hours
-                </p>
+                <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">Operating Hours</p>
               </div>
-              <div className="w-px h-12 bg-border"></div>
+              <div className="hidden sm:block w-px h-12 bg-border"></div>
               <div className="flex flex-col items-center">
                 <p className="text-3xl text-medium-red font-bold">3</p>
-                <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
-                  Years Strong
-                </p>
+                <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">Years Strong</p>
               </div>
             </div>
           </div>
@@ -208,7 +202,7 @@ const CoachProfileAbout = () => {
                             </DialogHeader>
                               
                             {/* Profile Card */}
-                            <div className="flex flex-col md:flex-row gap-10 items-start">
+                            <div className="flex flex-col md:flex-row gap-10 items-center md:items-start">
                               {/* Left side */}
                               <div className="flex flex-col items-center md:w-1/3">
                                 <img
