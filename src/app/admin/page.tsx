@@ -134,7 +134,7 @@ export default function AdminPage() {
 
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-8 md:p-8 space-y-8">
       {/* Plan Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
@@ -158,9 +158,9 @@ export default function AdminPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
         <div className="flex-1">
-          <Label htmlFor="search">Search Users</Label>
+          <Label htmlFor="search" className="pb-2">Search Users</Label>
           <Input
             id="search"
             placeholder="Search by name or email"
@@ -180,14 +180,15 @@ export default function AdminPage() {
 
       {/* User Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-border text-sm">
+        <table className="min-w-full border border-border text-xs sm:text-sm">
           <thead className="bg-muted/30">
             <tr>
-              <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Email</th>
-              <th className="px-4 py-2 text-left">Role</th>
-              <th className="px-4 py-2 text-left">Paid</th>
-              <th className="px-4 py-2 text-left">User Created</th>
+              <th className="px-4 sm:px-4 py-2 text-left">Name</th>
+              <th className="px-4 sm:px-4 py-2 text-left">Email</th>
+              <th className="px-4 sm:px-4 py-2 text-left">Role</th>
+              <th className="px-4 sm:px-4 py-2 text-left">Paid</th>
+              <th className="px-4 sm:px-4 py-2 text-left">User Created</th>
+              <th className="px-4 sm:px-4 py-2 text-left">Logs</th>
             </tr>
           </thead>
           <tbody>
@@ -218,7 +219,7 @@ export default function AdminPage() {
         </table>
       </div>
       {/* QR Scanner */}
-      <div className="mt-8 border p-6 rounded-lg">
+      <div className="mt-8 border p-4 md:p-6 rounded-lg w-full">
         <h2 className="text-lg font-bold mb-4">Scan Member QR</h2>
 
         {!scanType ? (
@@ -275,56 +276,56 @@ export default function AdminPage() {
         )}
       </div>
       {/* Attendance Logs Dialog */}
-<Dialog open={showLogs} onOpenChange={setShowLogs}>
-  <DialogContent className="max-w-2xl">
-    <DialogHeader>
-      <DialogTitle>
-        Attendance Logs for {selectedUser?.name}
-      </DialogTitle>
-    </DialogHeader>
+      <Dialog open={showLogs} onOpenChange={setShowLogs}>
+        <DialogContent className="w-full max-w-full sm:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              Attendance Logs for {selectedUser?.name}
+            </DialogTitle>
+          </DialogHeader>
 
-    <div className="mt-4">
-      {!logs ? (
-        <p>Loading...</p>
-      ) : logs.length === 0 ? (
-        <p>No logs found.</p>
-      ) : (
-        <div className="overflow-x-auto rounded-lg border">
-          <table className="min-w-full text-sm">
-            <thead className="bg-muted/30">
-              <tr>
-                <th className="px-4 py-2 text-left">Type</th>
-                <th className="px-4 py-2 text-left">Timestamp</th>
-                <th className="px-4 py-2 text-left">Scanned By</th>
-              </tr>
-            </thead>
-            <tbody>
-              {logs.map((log: any) => (
-                <tr key={log._id} className="border-t">
-                  <td className="px-4 py-2 font-medium">
-                    {log.type === "entry" ? (
-                      <span className="text-green-600">Entry</span>
-                    ) : (
-                      <span className="text-red-600">Exit</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-2">
-                    {new Date(log.timestamp).toLocaleString()}
-                  </td>
-                  <td className="px-4 py-2">
-                    {log.scannedBy
-                      ? userMap.get(log.scannedBy) ?? log.scannedBy
-                      : "—"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  </DialogContent>
-</Dialog>
+          <div className="mt-4">
+            {!logs ? (
+              <p>Loading...</p>
+            ) : logs.length === 0 ? (
+              <p>No logs found.</p>
+            ) : (
+              <div className="overflow-x-auto rounded-lg border">
+                <table className="min-w-full text-sm">
+                  <thead className="bg-muted/30">
+                    <tr>
+                      <th className="px-4 py-2 text-left">Type</th>
+                      <th className="px-4 py-2 text-left">Timestamp</th>
+                      <th className="px-4 py-2 text-left">Scanned By</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {logs.map((log: any) => (
+                      <tr key={log._id} className="border-t">
+                        <td className="px-4 py-2 font-medium">
+                          {log.type === "entry" ? (
+                            <span className="text-green-600">Entry</span>
+                          ) : (
+                            <span className="text-red-600">Exit</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-2">
+                          {new Date(log.timestamp).toLocaleString()}
+                        </td>
+                        <td className="px-4 py-2">
+                          {log.scannedBy
+                            ? userMap.get(log.scannedBy) ?? log.scannedBy
+                            : "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
 
     </div>

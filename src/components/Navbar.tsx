@@ -145,8 +145,14 @@ const Navbar = () => {
                       )}
 
                       <div className="pt-2 border-t border-border">
-                        <UserButton />
+                      <div className="flex items-center gap-3">
+                        <UserButton afterSignOutUrl="/" />
+                        <span className="text-sm font-medium">
+                          {user?.fullName || user?.username || "User"}
+                        </span>
                       </div>
+                    </div>
+
                     </>
                   ) : (
                     <div className="flex flex-col gap-3 pt-2">
