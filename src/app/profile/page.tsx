@@ -19,11 +19,17 @@ import {
 import {QRCodeSVG} from "qrcode.react";
 
 const ProfilePage = () => {
-  const { user } = useUser();
-  const userId = user?.id as string;
+  const { user, isLoaded } = useUser();
 
-  const allPlans = useQuery(api.plans.getUserPlans, { userId });
+  const allPlans = useQuery(
+    api.plans.getUserPlans,
+    user ? { userId: user.id } : "skip"
+  );
   const [selectedPlanId, setSelectedPlanId] = useState<null | string>(null);
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
 
   const activePlan = allPlans?.find((plan) => plan.isActive);
 
@@ -41,9 +47,9 @@ const ProfilePage = () => {
           <span className="text-foreground">QR Code</span>
         </h2>
 
-        {userId && (
+        {user && (
           <div className="flex flex-col items-center gap-4">
-            <QRCodeSVG value={userId} size={180} level="H" includeMargin />
+            <QRCodeSVG value={user.id} size={180} level="H" includeMargin />
             <p className="text-sm text-muted-foreground font-mono">
               Show this QR at the gym entrance
             </p>
