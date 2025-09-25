@@ -15,6 +15,10 @@ import { CheckCircle2, AlertCircle } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { useMutation } from "convex/react";
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
+import { Calendar as CalendarIcon } from "lucide-react"
+import { format } from "date-fns"
 
 export default function AdminPage() {
   const { user, isLoaded } = useUser();
@@ -30,13 +34,14 @@ export default function AdminPage() {
 
 
   const logAttendance = useMutation(api.attendance.logAttendance);
-  const [lastScan, setLastScan] = useState<string | null>(null);
+  const [lastScanTime, setLastScanTime] = useState<number>(0);
   const [scanType, setScanType] = useState<"entry" | "exit" | null>(null);
 
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [showLogs, setShowLogs] = useState(false);
 
   const logs = useQuery(api.attendance.getLogsByUser, selectedUser ? { clerkId: selectedUser.clerkId } : "skip");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
 
   // Redirect if not admin
@@ -99,31 +104,36 @@ export default function AdminPage() {
 
 
   const handleScan = async (result: string) => {
-    if (result && result !== lastScan && scanType) {
-      setLastScan(result);
+  if (!result || !scanType) return;
 
-      try {
-        await logAttendance({
-          userId: result,
-          type: scanType,
-          staffId: user?.id,
-        });
+  const now = Date.now();
 
-        setFeedback({
-          type: "success",
-          message: `Attendance (${scanType}) logged for user: ${result}`,
-        });
-      } catch (err) {
-        console.error(err);
-        setFeedback({
-          type: "error",
-          message: "Failed to log attendance. Please try again.",
-        });
-      }
+  // Ignore duplicates within 2 seconds
+  if (now - lastScanTime < 2000) return;
 
-      setScanType(null); // reset mode
-    }
-  };
+  setLastScanTime(now);
+
+  try {
+    await logAttendance({
+      userId: result,
+      type: scanType,
+      staffId: user?.id,
+    });
+
+    setFeedback({
+      type: "success",
+      message: `Attendance (${scanType}) logged for user: ${result}`,
+    });
+  } catch (err) {
+    console.error(err);
+    setFeedback({
+      type: "error",
+      message: "Failed to log attendance. Please try again.",
+    });
+  }
+
+  setScanType(null); // reset mode
+};
 
   const userMap = new Map(
   users.map((u: any) => [
@@ -132,6 +142,13 @@ export default function AdminPage() {
   ])
 );
 
+const filteredLogs = logs
+  ? logs.filter((log: any) => {
+      if (!selectedDate) return true;
+      const logDate = new Date(log.timestamp).toDateString();
+      return logDate === selectedDate.toDateString();
+    })
+  : [];
 
 
   return (
@@ -278,22 +295,55 @@ export default function AdminPage() {
       </div>
       {/* Attendance Logs Dialog */}
       <Dialog open={showLogs} onOpenChange={setShowLogs}>
-        <DialogContent className="w-full max-w-full sm:max-w-2xl">
+        <DialogContent className="w-full max-w-full sm:max-w-2xl max-h-[90vh] flex flex-col">
           <DialogHeader>
             <DialogTitle>
               Attendance Logs for {selectedUser?.name}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="mt-4">
+          {/* Date Filter */}
+          <div className="mt-2 mb-4 flex items-center gap-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-[240px] justify-start text-left font-normal"
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate ?? undefined}
+                  onSelect={(date) => setSelectedDate(date ?? null)}
+                  required={false}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+            {selectedDate && (
+              <Button
+                variant="ghost"
+                onClick={() => setSelectedDate(null)}
+              >
+                Clear
+              </Button>
+            )}
+          </div>
+          
+          {/* Logs Table */}
+          <div className="flex-1 overflow-y-auto">
             {!logs ? (
               <p>Loading...</p>
-            ) : logs.length === 0 ? (
+            ) : filteredLogs.length === 0 ? (
               <p>No logs found.</p>
             ) : (
-              <div className="overflow-x-auto rounded-lg border">
+              <div className="overflow-x-auto rounded-lg border max-h-[60vh]">
                 <table className="min-w-full text-sm">
-                  <thead className="bg-muted/30">
+                  <thead className="bg-muted/30 top-0 z-10">
                     <tr>
                       <th className="px-4 py-2 text-left">Type</th>
                       <th className="px-4 py-2 text-left">Timestamp</th>
@@ -301,7 +351,7 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {logs.map((log: any) => (
+                    {filteredLogs.map((log: any) => (
                       <tr key={log._id} className="border-t">
                         <td className="px-4 py-2 font-medium">
                           {log.type === "entry" ? (
@@ -327,8 +377,6 @@ export default function AdminPage() {
           </div>
         </DialogContent>
       </Dialog>
-
-
     </div>
   );
 }
