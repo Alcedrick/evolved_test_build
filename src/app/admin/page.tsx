@@ -114,6 +114,7 @@ export default function AdminPage() {
           message: `Attendance (${scanType}) logged for user: ${result}`,
         });
       } catch (err) {
+        console.error(err);
         setFeedback({
           type: "error",
           message: "Failed to log attendance. Please try again.",
