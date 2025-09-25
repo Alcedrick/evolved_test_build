@@ -167,14 +167,13 @@ const GenerateProgramPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* AI ASSISTANT CARD */}
           <Card className="bg-card backdrop-blur-sm border border-border overflow-hidden relative">
-            <div className="aspect-video flex flex-col items-center justify-center p-6 relative">
+            <div className="flex flex-col items-center justify-center text-center p-6 min-h-[260px] relative">
               {/* AI VOICE ANIMATION */}
               <div
-                className={`absolute inset-0 ${
+                className={`absolute inset-0 pointer-events-none ${
                   isSpeaking ? "opacity-30" : "opacity-0"
                 } transition-opacity duration-300`}
               >
-                {/* Voice wave animation when speaking */}
                 <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-center items-center h-20">
                   {[...Array(5)].map((_, i) => (
                     <div
@@ -182,23 +181,19 @@ const GenerateProgramPage = () => {
                       className={`mx-1 h-16 w-1 bg-primary rounded-full ${
                         isSpeaking ? "animate-sound-wave" : ""
                       }`}
-                      style={{
-                        animationDelay: `${i * 0.1}s`,
-                        height: isSpeaking ? `${Math.random() * 50 + 20}%` : "5%",
-                      }}
+                      style={{ animationDelay: `${i * 0.1}s` }}
                     />
                   ))}
                 </div>
               </div>
-
+                
               {/* AI IMAGE */}
-              <div className="relative size-32 mb-4">
+              <div className="relative w-32 h-32 mb-4 mx-auto">
                 <div
                   className={`absolute inset-0 bg-primary opacity-10 rounded-full blur-lg ${
                     isSpeaking ? "animate-pulse" : ""
                   }`}
                 />
-
                 <div className="relative w-full h-full rounded-full bg-card flex items-center justify-center border border-border overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-secondary/10"></div>
                   <img
@@ -208,12 +203,11 @@ const GenerateProgramPage = () => {
                   />
                 </div>
               </div>
-
+                
               <h2 className="text-xl font-bold text-foreground">ArniBot</h2>
               <p className="text-sm text-muted-foreground mt-1">Fitness & Diet Coach</p>
-
+                
               {/* SPEAKING INDICATOR */}
-
               <div
                 className={`mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-border ${
                   isSpeaking ? "border-primary" : ""
@@ -224,46 +218,44 @@ const GenerateProgramPage = () => {
                     isSpeaking ? "bg-primary animate-pulse" : "bg-muted"
                   }`}
                 />
-
                 <span className="text-xs text-muted-foreground">
                   {isSpeaking
                     ? "Speaking..."
                     : callActive
-                      ? "Listening..."
-                      : callEnded
-                        ? "Redirecting to profile..."
-                        : "Waiting..."}
+                    ? "Listening..."
+                    : callEnded
+                    ? "Redirecting to profile..."
+                    : "Waiting..."}
                 </span>
               </div>
             </div>
           </Card>
-
+                  
           {/* USER CARD */}
-          <Card className={`bg-card/90 backdrop-blur-sm border overflow-hidden relative`}>
-            <div className="aspect-video flex flex-col items-center justify-center p-6 relative">
+          <Card className="bg-card/90 backdrop-blur-sm border overflow-hidden relative">
+            <div className="flex flex-col items-center justify-center text-center p-6 min-h-[260px]">
               {/* User Image */}
-              <div className="relative size-32 mb-4">
+              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 mx-auto">
                 <img
                   src={user?.imageUrl}
                   alt="User"
-                  // ADD THIS "size-full" class to make it rounded on all images
-                  className="size-full object-cover rounded-full"
+                  className="w-full h-full object-cover"
                 />
               </div>
-
+                  
               <h2 className="text-xl font-bold text-foreground">You</h2>
               <p className="text-sm text-muted-foreground mt-1">
                 {user ? (user.firstName + " " + (user.lastName || "")).trim() : "Guest"}
               </p>
-
-              {/* User Ready Text */}
-              <div className={`mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-card border`}>
-                <div className={`w-2 h-2 rounded-full bg-muted`} />
+                  
+              <div className="mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-card border justify-center">
+                <div className="w-2 h-2 rounded-full bg-muted" />
                 <span className="text-xs text-muted-foreground">Ready</span>
               </div>
             </div>
           </Card>
         </div>
+
 
         {/* MESSAGE COINTER  */}
         {messages.length > 0 && (

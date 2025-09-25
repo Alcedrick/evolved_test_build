@@ -36,28 +36,38 @@ export function AttendanceLogsDialog({
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
-                className="w-[240px] justify-start text-left font-normal"
+                className="w-[240px] justify-start text-left font-normal bg-black text-white"
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-0" align="start">
+            <PopoverContent
+              className="p-0 bg-black rounded-lg shadow-lg"
+              align="start"
+            >
               <Calendar
                 mode="single"
                 selected={selectedDate ?? undefined}
                 onSelect={(date) => setSelectedDate(date ?? null)}
                 required={false}
                 initialFocus
+                className="bg-black text-white [&_.rdp-day_selected]:bg-white [&_.rdp-day_selected]:text-black [&_.rdp-day:hover]:bg-gray-700"
               />
             </PopoverContent>
           </Popover>
+          
           {selectedDate && (
-            <Button variant="ghost" onClick={() => setSelectedDate(null)}>
+            <Button
+              variant="outline"
+              onClick={() => setSelectedDate(null)}
+              className="text-white hover:bg-gray-800"
+            >
               Clear
             </Button>
           )}
         </div>
+
 
         {/* Logs Table */}
         <div className="flex-1 overflow-y-auto">
