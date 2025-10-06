@@ -5,14 +5,13 @@ import { useQuery, useMutation, useAction } from "convex/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { api } from "../../../convex/_generated/api";
-
 import { PlanStats } from "@/components/PlanStats";
 import { UserFilters } from "@/components/UserFilters";
 import { UserTable } from "@/components/UserTable";
 import { QrScannerBox } from "@/components/QrScannerBox";
 import { AttendanceLogsDialog } from "@/components/AttendanceLogsDialog";
 import { Button } from "@/components/ui/button";
-
+import { Plus } from "lucide-react";
 import { UserModal } from "@/components/UserModal";
 
 
@@ -213,7 +212,14 @@ const handleEditUser = async (clerkId: string, updates: { name?: string; email?:
   return (
     <div className="p-8 space-y-8">
       <div className="flex justify-end">
-        <Button onClick={openCreateUser}>+ Create User</Button>
+        <Button
+          onClick={openCreateUser}
+          className="flex items-center gap-2"
+        >
+          <Plus size={18} />
+          Create User
+        </Button>
+
       </div>
 
       {showModal && (

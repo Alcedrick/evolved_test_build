@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import { DumbbellIcon, HomeIcon, UserIcon, BookAlert, ShieldAlert, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
@@ -71,12 +71,6 @@ const Navbar = () => {
                         </Button>
                       </Link>
                 
-
-                      <SignUpButton>
-                        <Button className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                          Sign Up
-                        </Button>
-                      </SignUpButton>
                     </>
                   )}
                 </nav>
@@ -157,20 +151,16 @@ const Navbar = () => {
                     </>
                   ) : (
                     <div className="flex flex-col gap-3 pt-2">
-                      <SignInButton>
+                      <Link href="/sign-in" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
                         <Button
                           variant={"outline"}
-                          className="w-full border-destructive text-default hover:text-white hover:bg-destructive/10"
+                          className="border-destructive text-default hover:text-white hover:bg-destructive/10"
                         >
                           Sign In
                         </Button>
-                      </SignInButton>
+                      </Link>
 
-                      <SignUpButton>
-                        <Button className="w-full bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                          Sign Up
-                        </Button>
-                      </SignUpButton>
+                      
                     </div>
                   )}
                 </nav>

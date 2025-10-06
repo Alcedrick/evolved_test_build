@@ -36,7 +36,6 @@ export const createUser = action({
         last_name: args.name.split(" ").slice(1).join(" ") || "",
         public_metadata: {
           role: args.role,
-          needsPasswordReset: true, // 👈 new flag
         },
       }),
 
@@ -54,7 +53,8 @@ export const createUser = action({
       name: args.name,
       email: args.email,
       clerkId: clerkUser.id,
-      role,
+      role: args.role ?? "user",
+      needsPasswordReset: true, // ✅ Default for first-time users
     });
 
     return { clerkId: clerkUser.id, userId };
