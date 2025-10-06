@@ -9,6 +9,7 @@ export default defineSchema({
         clerkId: v.string(),
         role: v.optional(v.string()),
         createdAt: v.optional(v.number()),
+        needsPasswordReset: v.optional(v.boolean()),
     }).index("by_clerk_id", ["clerkId"]),
 
     plans: defineTable({

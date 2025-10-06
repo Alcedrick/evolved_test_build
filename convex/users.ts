@@ -143,6 +143,7 @@ export const updateUser = mutation({
     clerkId: v.string(),
     image: v.optional(v.string()),
     role: v.optional(v.string()),
+    needsPasswordReset: v.optional(v.boolean()),
   },
   handler: async(ctx, args) => {
     

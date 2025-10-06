@@ -12,15 +12,7 @@ import { UserTable } from "@/components/UserTable";
 import { QrScannerBox } from "@/components/QrScannerBox";
 import { AttendanceLogsDialog } from "@/components/AttendanceLogsDialog";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { UserModal } from "@/components/UserModal";
 
 
@@ -59,10 +51,6 @@ useEffect(() => {
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [showLogs, setShowLogs] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  const [showCreateUser, setShowCreateUser] = useState(false);
-  const [newUser, setNewUser] = useState({ name: "", email: "", role: "user" });
-  const [isCreating, setIsCreating] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
