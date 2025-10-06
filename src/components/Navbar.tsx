@@ -62,14 +62,15 @@ const Navbar = () => {
                     </>
                   ) : (
                     <>
-                      <SignInButton>
+                    <Link href="/sign-in" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
                         <Button
                           variant={"outline"}
                           className="border-destructive text-default hover:text-white hover:bg-destructive/10"
                         >
                           Sign In
                         </Button>
-                      </SignInButton>
+                      </Link>
+                
 
                       <SignUpButton>
                         <Button className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
