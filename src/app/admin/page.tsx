@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { UserModal } from "@/components/UserModal";
 
-
 type Feedback = {
   type: "success" | "error";
   message: string;
@@ -34,36 +33,29 @@ export default function AdminPage() {
   const usersData = useQuery(api.users.getAllUsers);
   const [localUsers, setLocalUsers] = useState<any[]>([]);
 
-// Keep local state in sync with live Convex data
-useEffect(() => {
-  if (usersData) setLocalUsers(usersData);
-}, [usersData]);
-
+  useEffect(() => {
+    if (usersData) setLocalUsers(usersData);
+  }, [usersData]);
 
   const [search, setSearch] = useState("");
   const [showPaidOnly, setShowPaidOnly] = useState(false);
   const [feedback, setFeedback] = useState<Feedback>(null);
-
   const [lastScanTime, setLastScanTime] = useState(0);
   const [scanType, setScanType] = useState<"entry" | "exit" | null>(null);
-
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [showLogs, setShowLogs] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
   const [editingUser, setEditingUser] = useState<any | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Open "create" modal
   const openCreateUser = () => {
     setModalMode("create");
     setEditingUser(null);
     setShowModal(true);
   };
 
-  // Open "edit" modal
   const openEditUser = (user: any) => {
     setModalMode("edit");
     setEditingUser(user);
@@ -91,83 +83,79 @@ useEffect(() => {
   if (!isLoaded) return <div>Loading user...</div>;
   if (!users || !plans) return <div>Loading data...</div>;
 
-  const handleCreateUser = async (data: { name: string; email: string; role: string }) => {
-  const { name, email, role } = data;
-  if (!name || !email) {
-    setFeedback({ type: "error", message: "Name and email are required" });
-    return;
-  }
+  const handleCreateUser = async (data: { name: string; email: string; role?: string }) => {
+    const { name, email } = data;
+    const role = data.role ?? "user";
+    
+    if (!name || !email) {
+      setFeedback({ type: "error", message: "Name and email are required" });
+      return;
+    }
 
-  const tempId = `temp-${Date.now()}`;
-  const optimisticUser = {
-    _id: tempId,
-    name,
-    email,
-    role,
-    clerkId: "pending",
-    createdAt: Date.now(),
+    const tempId = `temp-${Date.now()}`;
+    const optimisticUser = {
+      _id: tempId,
+      name,
+      email,
+      role,
+      clerkId: "pending",
+      createdAt: Date.now(),
+    };
+
+    setLocalUsers((prev) => [optimisticUser, ...prev]);
+
+    try {
+      const result = await createUser({ name, email, role });
+      setLocalUsers((prev) =>
+        prev.map((u) =>
+          u._id === tempId
+            ? { ...u, clerkId: result.clerkId, _id: result.userId ?? tempId }
+            : u
+        )
+      );
+      setFeedback({ type: "success", message: "User created successfully!" });
+    } catch (err: any) {
+      console.error(err);
+      setLocalUsers((prev) => prev.filter((u) => u._id !== tempId));
+      setFeedback({ type: "error", message: err.message || "Error creating user" });
+    }
   };
 
-  setLocalUsers((prev) => [optimisticUser, ...prev]);
+  const handleDeleteUser = async (clerkId: string) => {
+    const prevUsers = localUsers;
+    setLocalUsers((prev) => prev.filter((u) => u.clerkId !== clerkId));
 
-  try {
-    const result = await createUser({ name, email, role });
+    try {
+      await deleteUser({ clerkId });
+      setFeedback({ type: "success", message: "User deleted" });
+    } catch (err) {
+      console.error(err);
+      setLocalUsers(prevUsers);
+      setFeedback({ type: "error", message: "Failed to delete user" });
+    }
+  };
+
+  const handleEditUser = async (clerkId: string, updates: { name?: string; email?: string; role?: string }) => {
     setLocalUsers((prev) =>
-      prev.map((u) =>
-        u._id === tempId
-          ? { ...u, clerkId: result.clerkId, _id: result.userId ?? tempId }
-          : u
-      )
+      prev.map((u) => (u.clerkId === clerkId ? { ...u, ...updates } : u))
     );
-    setFeedback({ type: "success", message: "User created successfully!" });
-  } catch (err: any) {
-    console.error(err);
-    setLocalUsers((prev) => prev.filter((u) => u._id !== tempId));
-    setFeedback({ type: "error", message: err.message || "Error creating user" });
-  }
-};
 
-
-const handleDeleteUser = async (clerkId: string) => {
-  const prevUsers = localUsers;
-  // Optimistic remove
-  setLocalUsers((prev) => prev.filter((u) => u.clerkId !== clerkId));
-
-  try {
-    await deleteUser({ clerkId });
-    setFeedback({ type: "success", message: "User deleted" });
-  } catch (err) {
-    console.error(err);
-    // Roll back if failure
-    setLocalUsers(prevUsers);
-    setFeedback({ type: "error", message: "Failed to delete user" });
-  }
-};
-
-const handleEditUser = async (clerkId: string, updates: { name?: string; email?: string; role?: string }) => {
-  // Optimistic update
-  setLocalUsers((prev) =>
-    prev.map((u) => (u.clerkId === clerkId ? { ...u, ...updates } : u))
-  );
-
-  try {
-    await editUser({ clerkId, ...updates });
-    setFeedback({ type: "success", message: "User updated" });
-  } catch (err) {
-    console.error(err);
-    setFeedback({ type: "error", message: "Failed to update user" });
-  }
-};
-
+    try {
+      await editUser({ clerkId, ...updates });
+      setFeedback({ type: "success", message: "User updated" });
+    } catch (err) {
+      console.error(err);
+      setFeedback({ type: "error", message: "Failed to update user" });
+    }
+  };
 
   const filteredUsers = localUsers.filter((u: any) => {
-  const matchesSearch =
-    u.name.toLowerCase().includes(search.toLowerCase()) ||
-    u.email.toLowerCase().includes(search.toLowerCase());
-  const matchesPaid = showPaidOnly ? u.paid : true;
-  return matchesSearch && matchesPaid;
-});
-
+    const matchesSearch =
+      u.name.toLowerCase().includes(search.toLowerCase()) ||
+      u.email.toLowerCase().includes(search.toLowerCase());
+    const matchesPaid = showPaidOnly ? u.paid : true;
+    return matchesSearch && matchesPaid;
+  });
 
   const mostCommonGoal = (() => {
     if (plans.length === 0) return "N/A";
@@ -210,16 +198,17 @@ const handleEditUser = async (clerkId: string, updates: { name?: string; email?:
   const userMap = new Map(users.map((u: any) => [u.clerkId, u.name?.split(" ")[0] ?? u.name ?? "Unknown"]));
 
   return (
-    <div className="p-8 space-y-8">
-      <div className="flex justify-end">
+    <div className="min-h-screen bg-neutral-950 p-8 space-y-8">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-semibold text-white">Admin Dashboard</h1>
         <Button
           onClick={openCreateUser}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition"
         >
           <Plus size={18} />
           Create User
         </Button>
-
       </div>
 
       {showModal && (
@@ -241,13 +230,14 @@ const handleEditUser = async (clerkId: string, updates: { name?: string; email?:
         />
       )}
 
-
+      {/* Other sections retain original styling */}
       <PlanStats users={users} plans={plans} mostCommonGoal={mostCommonGoal} />
       <UserFilters
         search={search}
         setSearch={setSearch}
         showPaidOnly={showPaidOnly}
         setShowPaidOnly={setShowPaidOnly}
+        inputClassName="bg-neutral-900 text-white placeholder-neutral-500 border border-neutral-700 focus:ring-red-500"
       />
       <UserTable
         users={filteredUsers}
@@ -258,7 +248,6 @@ const handleEditUser = async (clerkId: string, updates: { name?: string; email?:
         onEditUser={openEditUser}
         onDeleteUser={handleDeleteUser}
       />
-
       <QrScannerBox
         scanType={scanType}
         setScanType={setScanType}
