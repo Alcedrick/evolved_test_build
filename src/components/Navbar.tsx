@@ -1,173 +1,221 @@
-"use client"
-import { useState } from "react";
-import { UserButton, useUser } from "@clerk/nextjs";
-import { DumbbellIcon, HomeIcon, UserIcon, BookAlert, ShieldAlert, Menu, X } from "lucide-react";
+"use client";
+import { useState, useEffect, useRef } from "react";
+import {
+  DumbbellIcon,
+  HomeIcon,
+  UserIcon,
+  BookAlert,
+  ShieldAlert,
+  Menu,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 
 const Navbar = () => {
-    const { isSignedIn, user } = useUser()
-    const role = user?.publicMetadata?.role as string | undefined;
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isSignedIn, user } = useUser();
+  const role = user?.publicMetadata?.role as string | undefined;
 
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-    return(
-        <header className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-md py-3">
-            <div className="container mx-auto flex items-center justify-between px-4">
-                {/* LOGO */}
-                <Link href="/" className="flex items-center gap-2">
-                    <div className="p-1 rounded">
-                      <Image src="/LIFTAPP_LOGO.png" alt="LiftApp Logo" width={100} height={100} className="w-8 h-8" />
-                    </div>
-                    <span className="text-xl font-bold font-sans">
-                      <span className="text-medium-red">Lift</span>App
-                    </span>
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => setIsClient(true), []);
+
+  // Detect clicks outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+    if (isMenuOpen) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMenuOpen]);
+
+  // Close on resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setIsMenuOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <header className="sticky top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-md py-3 border-b border-border">
+      <div className="container mx-auto flex items-center justify-between px-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/LIFTAPP_LOGO.png"
+            alt="LiftApp Logo"
+            width={100}
+            height={100}
+            className="w-8 h-8"
+          />
+          <span className="text-xl font-bold font-sans">
+            <span className="text-medium-red">Lift</span>App
+          </span>
+        </Link>
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-5">
+          {isSignedIn ? (
+            <>
+              <Link href="/" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                <HomeIcon size={18} /> Home
+              </Link>
+              <Link href="/generate-program" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                <DumbbellIcon size={18} /> Generate
+              </Link>
+              <Link href="/profile" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                <UserIcon size={18} /> Profile
+              </Link>
+              <Link href="/about" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                <BookAlert size={18} /> About
+              </Link>
+              {role === "admin" && (
+                <Link href="/admin" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
+                  <ShieldAlert size={18} /> Admin
                 </Link>
+              )}
+              <UserButton />
+            </>
+          ) : (
+            <Link href="/sign-in">
+              <Button variant="outline" className="border-destructive text-default hover:text-white hover:bg-destructive/10">
+                Sign In
+              </Button>
+            </Link>
+          )}
+        </nav>
 
-                {/* DESKTOP NAVIGATION */}
-                <nav className="hidden md:flex items-center gap-5">
-                  {isSignedIn ? (
-                    <>
-                      <Link href="/" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
-                        <HomeIcon size={18} />
-                        <span>Home</span>
-                      </Link>
+        {/* Mobile Hamburger */}
+        <button
+          onClick={toggleMenu}
+          className="md:hidden p-2 rounded-md hover:bg-muted transition-colors"
+          aria-label="Toggle menu"
+        >
+          <Menu size={24} />
+        </button>
+      </div>
 
-                      <Link href="/generate-program" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
-                        <DumbbellIcon size={18} />
-                        <span>Generate</span>
-                      </Link>
-
-                      <Link href="/profile" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
-                        <UserIcon size={18} />
-                        <span>Profile</span>
-                      </Link>
-
-                      <Link href="/about" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
-                        <BookAlert size={18} />
-                        <span>About</span>
-                      </Link>
-
-                      {/* Show only if admin */}
-                      {role === "admin" && (
-                        <Link href="/admin" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
-                          <ShieldAlert size={18} />
-                          <span>Admin</span>
-                        </Link>
-                      )}
-
-                      <UserButton />
-                    </>
-                  ) : (
-                    <>
-                    <Link href="/sign-in" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
-                        <Button
-                          variant={"outline"}
-                          className="border-destructive text-default hover:text-white hover:bg-destructive/10"
-                        >
-                          Sign In
-                        </Button>
-                      </Link>
-                
-                    </>
-                  )}
-                </nav>
-
-                {/* MOBILE HAMBURGER BUTTON */}
-                <button
-                  onClick={toggleMenu}
-                  className="md:hidden p-2 rounded-md hover:bg-muted transition-colors"
-                  aria-label="Toggle menu"
-                >
-                  {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-            </div>
-
-            {/* MOBILE MENU */}
+      {/* ✅ Portal for Overlay + Sidebar */}
+      {isClient &&
+        createPortal(
+          <>
+            {/* Dim Overlay */}
             {isMenuOpen && (
-              <div className="md:hidden bg-background/95 backdrop-blur-md border-b border-border">
-                <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
+              <div
+                className="fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300"
+                onClick={closeMenu}
+              ></div>
+            )}
+
+            {/* Sidebar */}
+            <div
+              ref={menuRef}
+              className={`fixed top-[4rem] right-0 bg-background/95 border-l border-border shadow-xl transform transition-transform duration-300 ease-in-out z-50 md:hidden
+                ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
+                w-[50%] h-[80vh] rounded-tl-2xl rounded-bl-2xl flex flex-col justify-between`}
+            >
+              {/* User Info */}
+              {isSignedIn && (
+                <div className="flex items-center gap-3 p-4 border-b border-border bg-background sticky top-0">
+                  <UserButton afterSignOutUrl="/" />
+                  <span className="text-sm font-medium truncate">
+                    {user?.fullName || user?.username || "User"}
+                  </span>
+                </div>
+              )}
+
+              {/* Nav Links */}
+              <div className="flex flex-col flex-grow overflow-y-auto">
+                <nav className="flex flex-col p-4 gap-3">
                   {isSignedIn ? (
                     <>
                       <Link
                         href="/"
-                        className="flex items-center gap-2 text-sm hover:text-destructive transition-colors py-2"
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={closeMenu}
+                        className="flex items-center gap-3 text-base hover:text-destructive transition-colors py-3"
                       >
-                        <HomeIcon size={18} />
-                        <span>Home</span>
+                        <HomeIcon size={20} /> Home
                       </Link>
-
                       <Link
                         href="/generate-program"
-                        className="flex items-center gap-2 text-sm hover:text-destructive transition-colors py-2"
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={closeMenu}
+                        className="flex items-center gap-3 text-base hover:text-destructive transition-colors py-3"
                       >
-                        <DumbbellIcon size={18} />
-                        <span>Generate</span>
+                        <DumbbellIcon size={20} /> Generate
                       </Link>
-
                       <Link
                         href="/profile"
-                        className="flex items-center gap-2 text-sm hover:text-destructive transition-colors py-2"
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={closeMenu}
+                        className="flex items-center gap-3 text-base hover:text-destructive transition-colors py-3"
                       >
-                        <UserIcon size={18} />
-                        <span>Profile</span>
+                        <UserIcon size={20} /> Profile
                       </Link>
-
                       <Link
                         href="/about"
-                        className="flex items-center gap-2 text-sm hover:text-destructive transition-colors py-2"
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={closeMenu}
+                        className="flex items-center gap-3 text-base hover:text-destructive transition-colors py-3"
                       >
-                        <BookAlert size={18} />
-                        <span>About</span>
+                        <BookAlert size={20} /> About
                       </Link>
-
-                      {/* Show only if admin */}
                       {role === "admin" && (
                         <Link
                           href="/admin"
-                          className="flex items-center gap-2 text-sm hover:text-destructive transition-colors py-2"
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={closeMenu}
+                          className="flex items-center gap-3 text-base hover:text-destructive transition-colors py-3"
                         >
-                          <ShieldAlert size={18} />
-                          <span>Admin</span>
+                          <ShieldAlert size={20} /> Admin
                         </Link>
                       )}
-
-                      <div className="pt-2 border-t border-border">
-                      <div className="flex items-center gap-3">
-                        <UserButton afterSignOutUrl="/" />
-                        <span className="text-sm font-medium">
-                          {user?.fullName || user?.username || "User"}
-                        </span>
-                      </div>
-                    </div>
-
                     </>
                   ) : (
-                    <div className="flex flex-col gap-3 pt-2">
-                      <Link href="/sign-in" className="flex items-center gap-1.5 text-sm hover:text-destructive transition-colors">
-                        <Button
-                          variant={"outline"}
-                          className="border-destructive text-default hover:text-white hover:bg-destructive/10"
-                        >
-                          Sign In
-                        </Button>
-                      </Link>
-
-                      
-                    </div>
+                    <Link href="/sign-in" onClick={closeMenu}>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="border-destructive text-default hover:text-white hover:bg-destructive/10 w-full mt-2"
+                      >
+                        Sign In
+                      </Button>
+                    </Link>
                   )}
                 </nav>
               </div>
-            )}
-        </header>
-    );
+
+              {/* ✅ Bottom Footer */}
+              <footer className="p-4 border-t border-border flex flex-col items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/LIFTAPP_LOGO.png"
+                    alt="LiftApp Logo"
+                    width={24}
+                    height={24}
+                    className="w-6 h-6"
+                  />
+                  <span className="font-semibold text-sm">
+                    <span className="text-medium-red">Lift</span>App
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground text-center">
+                  © {new Date().getFullYear()} LiftApp — All rights reserved
+                </p>
+              </footer>
+            </div>
+          </>,
+          document.body
+        )}
+    </header>
+  );
 };
 
 export default Navbar;

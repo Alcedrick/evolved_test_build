@@ -198,18 +198,23 @@ export default function AdminPage() {
   const userMap = new Map(users.map((u: any) => [u.clerkId, u.name?.split(" ")[0] ?? u.name ?? "Unknown"]));
 
   return (
-    <div className="min-h-screen bg-neutral-950 p-8 space-y-8">
+    <div className="min-h-screen  p-8 space-y-8">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-white">Admin Dashboard</h1>
-        <Button
-          onClick={openCreateUser}
-          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition"
-        >
-          <Plus size={18} />
-          Create User
-        </Button>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <h1 className="text-2xl font-semibold text-white">
+          Admin Dashboard
+        </h1>
+        <div className="flex sm:justify-end">
+          <Button
+            onClick={openCreateUser}
+            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition"
+          >
+            <Plus size={18} />
+            Create User
+          </Button>
+        </div>
       </div>
+
 
       {showModal && (
         <UserModal

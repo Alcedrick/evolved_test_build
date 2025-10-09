@@ -32,7 +32,7 @@ const CoachProfile = () => {
     <div className="w-full pb-16 sm:pb-24 pt-12 sm:pt-16 relative">
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* HEADER- PROGRAM GALLERY */}
-        <div className="bg-light-black backdrop-blur-sm border border-border rounded-lg overflow-hidden mb-12 sm:mb-16">
+        <div className="bg-neutral-900 backdrop-blur-sm border border-border border-neutral-800 rounded-lg overflow-hidden mb-12 sm:mb-16">
           {/* HEADER BAR */}
           <div className="flex flex-col sm:flex-row items-start justify-start gap-2 px-4 sm:px-5 py-3 border-b border-border bg-background/70 text-left">
             <div className="flex items-center gap-2">
@@ -88,10 +88,10 @@ const CoachProfile = () => {
             {COACH_PROFILE.map((program) => (
               <CarouselItem
                 key={program.id}
-                className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
+                className="sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
               >
-                <div className="h-full flex">
-                  <Card className="h-full flex flex-col bg-light-black backdrop-blur-sm border border-border hover:border-medium-red/50 transition-colors overflow-hidden">
+                <div className="h-full flex justify-center">
+                  <Card className="h-full flex flex-col bg-neutral-900 backdrop-blur-sm border border-border border-neutral-800 hover:border-medium-red/50 transition-colors overflow-hidden">
                     {/* Card header */}
                     <div className="flex items-center justify-start gap-4 px-4 py-2 border-b border-border bg-background/70">
                       <div className="flex items-center gap-2">
@@ -181,7 +181,7 @@ const CoachProfile = () => {
                           </Button>
                         </DialogTrigger>
 
-                        <DialogContent className="sm:max-w-5xl h-[80vh] w-full bg-black border border-border overflow-y-auto flex justify-center items-start sm:items-center">
+                        <DialogContent className="sm:max-w-5xl h-[80vh] w-full bg-neutral-900 border border-border border-neutral-950 overflow-y-auto flex justify-center items-start sm:items-center">
                         <DialogHeader>
                           <DialogTitle className="sr-only">Coach Profile</DialogTitle>
                         </DialogHeader>

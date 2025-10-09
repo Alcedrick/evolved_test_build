@@ -32,7 +32,7 @@ const CoachProfileAbout = () => {
     <div className="w-full pb-24 pt-16 relative">
       <div className="container mx-auto max-w-6xl px-4">
         {/* HEADER- PROGRAM GALLERY */}
-        <div className="bg-light-black backdrop-blur-sm border border-border rounded-lg overflow-hidden mb-16">
+        <div className="bg-neutral-900 backdrop-blur-sm border border-border border-neutral-800 rounded-lg overflow-hidden mb-16">
           {/* HEADER BAR */}
           <div className="flex flex-col sm:flex-row items-start justify-start gap-4 px-5 py-3 border-b border-border bg-background/70">
             <div className="flex items-center gap-2">
@@ -87,7 +87,7 @@ const CoachProfileAbout = () => {
               className="pl-4 md:basis-1/2 lg:basis-1/3"
             >
               <div className="h-full flex">
-                <Card className="h-full flex flex-col bg-light-black backdrop-blur-sm border border-border hover:border-medium-red/50 transition-colors overflow-hidden">
+                <Card className="h-full flex flex-col bg-neutral-900 backdrop-blur-sm border border-border border-neutral-800 hover:border-medium-red/50 transition-colors overflow-hidden">
                   {/* Card header */}
                   <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-background/70">
                     <div className="flex items-center gap-2">
@@ -195,7 +195,7 @@ const CoachProfileAbout = () => {
                           </Button>
                         </DialogTrigger>
                               
-                        <DialogContent className="sm:max-w-5xl h-[80vh] w-full bg-black border border-border overflow-y-auto">
+                        <DialogContent className="sm:max-w-5xl h-[80vh] w-full bg-neutral-950 border border-border border-neutral-950 overflow-y-auto ">
                         <DialogHeader>
                               <DialogTitle className="sr-only">Coach Profile</DialogTitle>
                               

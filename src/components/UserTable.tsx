@@ -13,7 +13,7 @@ export function UserTable({ users, onViewLogs, onEditUser, onDeleteUser }: UserT
   return (
     <div className="overflow-x-auto bg-neutral-900 border border-neutral-800 rounded-xl shadow-md">
       <table className="min-w-full text-sm text-gray-200">
-        <thead className="bg-neutral-800 text-neutral-50">
+        <thead className="bg-neutral-900 text-neutral-50">
           <tr>
             <th className="px-4 py-3 text-left font-semibold">Name</th>
             <th className="px-4 py-3 text-left font-semibold">Email</th>
