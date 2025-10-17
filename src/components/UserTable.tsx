@@ -18,7 +18,7 @@ export function UserTable({ users, onViewLogs, onEditUser, onDeleteUser }: UserT
             <th className="px-4 py-3 text-left font-semibold">Name</th>
             <th className="px-4 py-3 text-left font-semibold">Email</th>
             <th className="px-4 py-3 text-left font-semibold">Role</th>
-            <th className="px-4 py-3 text-left font-semibold">Paid</th>
+            <th className="px-4 py-3 text-left font-semibold">Payment Status</th>
             <th className="px-4 py-3 text-left font-semibold">User Created</th>
             <th className="px-4 py-3 text-left font-semibold">Actions</th>
           </tr>
@@ -36,12 +36,15 @@ export function UserTable({ users, onViewLogs, onEditUser, onDeleteUser }: UserT
               <td className="px-4 py-3">{u.email}</td>
               <td className="px-4 py-3 capitalize">{u.role ?? "user"}</td>
               <td className="px-4 py-3">
-                {u.paid ? (
+                {u.paymentStatus === "approved" ? (
                   <span className="text-green-500">✅</span>
-                ) : (
+                ) : u.paymentStatus === "rejected" ? (
                   <span className="text-red-500">❌</span>
+                ) : (
+                  <span className="text-yellow-400">⏳</span>
                 )}
               </td>
+
               <td className="px-4 py-3">
                 {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "—"}
               </td>

@@ -1,48 +1,64 @@
-import { defineSchema, defineTable } from "convex/server"
-import {v} from 'convex/values'
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
 
 export default defineSchema({
-    users: defineTable({
-        name: v.string(),
-        email: v.string(),
-        image: v.optional(v.string()),
-        clerkId: v.string(),
-        role: v.optional(v.string()),
-        createdAt: v.optional(v.number()),
-        needsPasswordReset: v.optional(v.boolean()),
-    }).index("by_clerk_id", ["clerkId"]),
+  users: defineTable({
+    name: v.string(),
+    email: v.string(),
+    image: v.optional(v.string()),
+    clerkId: v.string(),
+    role: v.optional(v.string()),
+    createdAt: v.optional(v.number()),
+    needsPasswordReset: v.optional(v.boolean()),
+  }).index("by_clerk_id", ["clerkId"]),
 
-    plans: defineTable({
-        userId: v.string(),
-        name: v.string(),
-        workoutPlan: v.object({
-            schedule: v.array(v.string()),
-            exercises: v.array(v.object({
-                day: v.string(),
-                routines: v.array(v.object({
-                    name: v.string(),
-                    sets: v.optional(v.number()),
-                    reps: v.optional(v.number()),
-                    duration: v.optional(v.string()),
-                    description: v.optional(v.string()),
-                    exercises: v.optional(v.array(v.string())),
-                }))
-            }))
-        }),
-        dietPlan: v.object({
-            dailyCalories: v.number(),
-            meals: v.array(v.object({
-                name: v.string(),
-                foods: v.array(v.string())
-            }))
-        }),
-        isActive: v.boolean(),
-    }).index("by_user_id", ["userId"]).index("by_active", ["isActive"]),
+  plans: defineTable({
+    userId: v.string(),
+    name: v.string(),
+    workoutPlan: v.object({
+      schedule: v.array(v.string()),
+      exercises: v.array(
+        v.object({
+          day: v.string(),
+          routines: v.array(
+            v.object({
+              name: v.string(),
+              sets: v.optional(v.number()),
+              reps: v.optional(v.number()),
+              duration: v.optional(v.string()),
+              description: v.optional(v.string()),
+              exercises: v.optional(v.array(v.string())),
+            })
+          ),
+        })
+      ),
+    }),
+    dietPlan: v.object({
+      dailyCalories: v.number(),
+      meals: v.array(
+        v.object({
+          name: v.string(),
+          foods: v.array(v.string()),
+        })
+      ),
+    }),
+    isActive: v.boolean(),
+  })
+    .index("by_user_id", ["userId"])
+    .index("by_active", ["isActive"]),
 
-    attendance: defineTable({
-        userId: v.string(),
-        timestamp: v.number(),
-        type: v.string(), // "entry" | "exit"
-        scannedBy: v.optional(v.string()), // staff userId
-    }).index("by_user_id", ["userId"]),
-})
+  attendance: defineTable({
+    userId: v.string(),
+    timestamp: v.number(),
+    type: v.string(), // "entry" | "exit"
+    scannedBy: v.optional(v.string()), // staff userId
+  }).index("by_user_id", ["userId"]),
+
+  // ✅ NEW TABLE HERE
+  payments: defineTable({
+    userId: v.string(),
+    imageUrl: v.string(), // Convex storageId
+    status: v.optional(v.string()), // "pending" | "approved" | "rejected"
+    createdAt: v.number(),
+  }).index("by_user_id", ["userId"]),
+});

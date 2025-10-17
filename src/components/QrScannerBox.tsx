@@ -33,8 +33,20 @@ export function QrScannerBox({ scanType, setScanType, handleScan, feedback }: an
             <Scanner
               onScan={(results) => {
                 if (results && results.length > 0) {
-                  const value = results[0].rawValue;
-                  if (value) handleScan(value);
+                  const value = results[0].rawValue.trim();
+                
+                  // ✅ Only accept valid user IDs
+                  const isValidUserId = /^user_[A-Za-z0-9]+$/.test(value);
+                
+                  if (isValidUserId) {
+                    handleScan(value);
+                  } else {
+                    // Optional: give feedback for invalid QR
+                    handleScan(null, {
+                      type: "error",
+                      message: "Invalid QR code — not a valid user ID.",
+                    });
+                  }
                 }
               }}
               constraints={{ facingMode: "environment" }}

@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "clear-trout-359.convex.cloud", // 👈 your Convex storage domain
+      },
+    ],
+  },
 };
 
 export default nextConfig;
